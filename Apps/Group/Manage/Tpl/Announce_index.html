@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Announce/index')}" class="onloading on"><em>公告管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Announce/add')}" class="onloading"><em>添加公告</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Announce/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>标题</th>
+                    <th width="150px">开始时间</th>
+                    <th width="150px">结束时间</th>
+                    <th width="150px">发布时间</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td>{$v.title}</td>
+                    <td align="center">{$v.starttime|date='Y-m-d H:i:s', ###}</td>
+                    <td align="center">{$v.endtime|date='Y-m-d H:i:s', ###}</td>
+                    <td align="center">{$v.posttime|date='Y-m-d', ###}</td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Announce/edit',array('id' => $v['id']))}">编辑</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Announce/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Announce/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                </td>
+                <td colspan="4" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

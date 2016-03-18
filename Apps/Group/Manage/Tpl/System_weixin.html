@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorpicker.js"></script>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		//图片上传配置区
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;   //图片上传提交地址
+		window.UEDITOR_CONFIG.imagePath = "" ; //'__ROOT__/uploads/img/'      //图片修正地址，引用了fixedImagePath,
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;////图片在线管理的处理地址
+		window.UEDITOR_CONFIG.imageManagerPath = "";// "__ROOT__"; //图片在线管理修正地址     
+
+
+		UE.getEditor('content');
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/i18n/jquery.jBox-zh-CN.js"></script>
+<link type="text/css" rel="stylesheet" href="__DATA__/static/jq_plugins/jBox/Skins2/blue/jbox.css"/>
+<script type="text/javascript">
+$(function () {
+	//缩略图上传
+	var litpic_tip = $(".litpic_tip");
+	var btn = $(".litpic_btn span");
+	$("#fileupload").wrap("<form id='myupload' action='{:U(GROUP_NAME. '/Public/upload', array('tb' => 2))}' method='post' enctype='multipart/form-data'></form>");
+    $("#fileupload").change(function(){
+    	if($("#fileupload").val() == "") return;
+		$("#myupload").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+        		$('#litpic_show').empty();
+				btn.html("上传中...");
+    		},
+			success: function(data) {
+				//litpic_tip.html("<b>"+data.title+"("+data.size+"k)</b> <span class='delimg' rel='"+data.url+"'>删除</span>");
+				if(data.state == 'SUCCESS'){					
+					litpic_tip.html(""+ data.title +" 上传成功("+data.size+"k)");
+					var img = data.url;//原图
+					var timg = data.turl;//缩略图
+					$('#litpic_show').html("<img src='"+timg+"' width='120'>");
+					$("#litpic").val(timg);
+				}else {
+					litpic_tip.html(data.state);		
+				}			
+					btn.html("添加缩略图");
+
+			},
+			error:function(xhr){
+				btn.html("上传失败");
+				litpic_tip.html(xhr);
+			}
+		});
+	});
+
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+     });
+	
+});
+
+$(function () {
+
+	$('#BrowerPicture').click(function(){
+		$.jBox("iframe:{:U(GROUP_NAME.'/Public/browseFile', array('stype' => 'picture'))}",{
+			title:'YHCMS',
+			width: 650,
+   			height: 350,
+    		buttons: { '关闭': true }
+   			}
+		);
+	});
+	$("#color").colorpicker({
+	    fillcolor:true
+	});
+});
+
+function selectPicture(sfile) {
+	$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+	$("#litpic").val(sfile);
+	$.jBox.tip("选择文件成功");
+	$.jBox.close(true);
+}
+
+
+</script>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>微信设置</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/weixin')}">
+		<div>
+		<dl>
+			<dt> 微信帐号：</dt>
+			<dd>
+				<input type="text" name="cfg_wx_appname" class="inp_one inp_w250" value="{$Think.config.cfg_wx_appname}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> AppId：</dt>
+			<dd>
+				<input type="text" name="cfg_wx_appid" class="inp_one inp_w250" value="{$Think.config.cfg_wx_appid}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> AppSecret：</dt>
+			<dd>
+				<input type="text" name="cfg_wx_appsecret" class="inp_one inp_w250" value="{$Think.config.cfg_wx_appsecret}" />
+			</dd>
+			<dd class="desc"> </dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> URL：</dt>
+			<dd>
+				{$Think.config.cfg_weburl}/weixinapi.html
+			</dd>
+		</dl>
+		<dl>
+			<dt> Token：</dt>
+			<dd>{$token}<input type="hidden" name="cfg_wx_token" value="{$token}"></dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 关注自动回复标题：</dt>
+			<dd>
+				<input type="text" name="cfg_wx_subscribe_title" class="inp_one inp_w250" value="{$Think.config.cfg_wx_subscribe_title}" />
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>	
+		<dl>
+			<dt> 关注自动回复内容：</dt>
+			<dd>
+				<textarea name="cfg_wx_subscribe_text" class="tarea_default w250">{$Think.config.cfg_wx_subscribe_text}</textarea><br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;">*最多120字</font>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 关注自动回复图片：</dt>
+			<dd>
+				<div class="litpic_show">
+				    <div style="float:left;">
+				    <input type="text" class="inp_w250" name="cfg_wx_subscribe_img" id="litpic"  value="{$Think.config.cfg_wx_subscribe_img}" />
+				    <input type="button" class="button" id="BrowerPicture" value="选择站内图片">
+				    </div>
+						<div class="litpic_btn">
+				        <span>添加缩略图</span>
+				        <input id="fileupload" type="file" name="mypic">
+				    </div>
+				    <div class="litpic_tip"></div>
+				    <div id="litpic_show">
+				    <if condition="$Think.config.cfg_wx_subscribe_img"><img src="{$Think.config.cfg_wx_subscribe_img}" width='120' /></if>
+				    </div>
+				</div>
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 点击图片跳转链接：</dt>
+			<dd>
+				<input type="text" name="cfg_wx_subscribe_url" class="inp_one inp_w250" value="{$Think.config.cfg_wx_subscribe_url}" />
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<!--<dl>
+			<dt> 自定义菜单：</dt>
+			<dd>
+				<textarea name="cfg_wx_menu" class="tarea_default">{$Think.config.cfg_wx_menu}</textarea><br/>
+				cfg_wx_menu
+			</dd>
+		</dl>-->
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

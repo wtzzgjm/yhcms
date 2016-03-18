@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript">
+			window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+			window.onload = function() {
+				window.UEDITOR_CONFIG.initialFrameWidth=600;
+				window.UEDITOR_CONFIG.initialFrameHeight=300;
+				window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;
+				window.UEDITOR_CONFIG.imagePath = "" ;
+				window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;
+				window.UEDITOR_CONFIG.imageManagerPath = "";
+				UE.getEditor('reply');
+
+			}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Guestbook/index')}" class="onloading"><em>留言本管理</em></a><span>|</span>
+        <a href="#" class="onloading on"><em>回复留言</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Guestbook/reply')}">
+		<dl>
+			<dt> 姓名：</dt>
+			<dd>{$vo.username}</dd>
+		</dl>
+		<dl>
+			<dt> 电话：</dt>
+			<dd>{$vo.tel}</dd>
+		</dl>	
+		<dl>
+			<dt> Email：</dt>
+			<dd>{$vo.email}</dd>
+		</dl>	
+		<dl>
+			<dt> QQ：</dt>
+			<dd>{$vo.qq}</dd>
+		</dl>
+		<dl>
+			<dt> 留言：</dt>
+			<dd>
+			<dd>{$vo.content}<if condition="$vo['status']">(悄悄话)</if></dd>
+		</dl>
+		<dl>
+			<dt> 回复：</dt>
+			<dd>
+			<dd>
+				<textarea name="reply" id="reply">{$vo.reply}</textarea>
+			</dd>
+		</dl>	
+		<div class="form_b">
+			<input type="button" class="btn_blue" value="返 回" onclick="javascript:history.go(-1);">
+			<input type="hidden" name="id" value="{$vo.id}" />	
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

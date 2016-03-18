@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <if condition='ACTION_NAME eq "index"'>
+            <a href="#" class="onloading on"><em>产品列表</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/add', array('pid' => $pid))}" class="onloading"><em>添加产品</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/batchadd', array('pid' => $pid))}" class="onloading"><em>批量添加产品</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/trach')}" class="onloading"><em>回收站</em></a>
+        <else/>
+            <a href="#" class="onloading"><em>产品列表</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/add', array('pid' => $pid))}" class="onloading"><em>添加产品</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/batchadd', array('pid' => $pid))}" class="onloading"><em>批量添加产品</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Product/trach')}" class="onloading on"><em>回收站</em></a>
+        </if>
+    </div>
+    <div class="bk10"></div>
+    <if condition='ACTION_NAME eq "index"'>
+    <div class="explain-col">
+        <font color="gray">
+            <foreach name='poscate' item='v'>
+            <a href="{:U(GROUP_NAME. '/' . ucfirst($v['tablename']) .'/index', array('pid' => $v['id']))}">{$v.name}</a>&nbsp;&gt;&nbsp;
+            </foreach>
+            <if condition='$subcate'>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;子栏目：</span>
+                <foreach name='subcate' item='v'>
+                    [&nbsp;<a href="{:U(GROUP_NAME. '/'. $v['modelname'] . '/index', array('pid' => $v['id']))}">{$v.name}</a>&nbsp;]
+                </foreach>
+            </if>
+        </font>
+    </div>
+    <style type="text/css">
+    .zdy_yh {width: 200px;margin-right: 8px;height: 26px;}
+    .zdy_yh2 {height:30px;}
+    </style>
+    <div class="explain-col" style="margin-top:10px;">
+        <form method="post" action="?" name="searchform" id="searchform">
+        <input name="pid" type="hidden" value="{$pid}" />
+        <input name="search" id="search" type="hidden" value="1" />
+        <!-- 类型筛选 ： -->
+        <select name="flag" class="zdy_yh2">
+            <option value="0">全部</option>
+            <option value="4" <if condition='4 & $flag = $flag'>selected</if>>推荐</option>
+            <!--<option value="1" <if condition='1 & $flag = $flag'>selected</if>>图片</option>
+            <option value="2" <if condition='2 & $flag = $flag'>selected</if>>头条</option>
+            <option value="4" <if condition='4 & $flag = $flag'>selected</if>>推荐</option>
+            <option value="8" <if condition='8 & $flag = $flag'>selected</if>>特推</option>
+            <option value="16" <if condition='16 & $flag = $flag'>selected</if>>幻灯</option>
+            <option value="64" <if condition='64 & $flag = $flag'>selected</if>>其他</option>-->
+        </select>&nbsp;&nbsp;
+        <input type="text" name="key" value="{$keyword}" placeholder="输入标题或关键字进行搜索" class="zdy_yh" />
+        <input type="submit" value="搜索" class="button" name="search" />
+        </form>
+    </div>
+    <div class="bk10"></div>
+    </if>
+    <!--
+        <if condition='ACTION_NAME eq "index"'>
+        <div class="left_pad">
+            <form method="post" action="{:U(GROUP_NAME. '/Product/index')}">
+                <input type="text" name="keyword" title="关键字" class="inp_default" value="{$keyword}">
+                <input type="hidden" name="pid" value="{$pid}">
+                <input type="submit" class="btn_blue" value="查  询">
+            </form>
+        </div>
+        </if>
+    -->
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Product/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th width="80px">排序</th>
+                    <th>标题</th>
+                    <th width="50px">推荐</th>
+                    <th width="100px">分类</th>
+                    <th width="80px">点击次数</th>
+                    <th width="150px">发布时间</th>
+                    <th width="120px">操作</th>
+                </tr>
+            </thead>
+            <style type="text/css">
+                .noborder {border:none;text-align: center;}
+                .img-w {display: none;width: 200px;padding:10px;border:1px solid #dcdcdc;position: absolute;top:-160px;background: #fff;overflow: hidden;z-index: 1000;left:100px;}
+                .abtitle {position: relative;}
+                .img-w img {background: #dcdcdc;}
+            </style>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td align="center"><input type="text" name="{$v.id}" value="{$v.sort}" size="3" style="text-align:center;" class="pxajax noborder"/></td>
+                    <td class="aleft abtitle" style="color:{$v.color}">{$v.title}
+                        <!--
+                        &nbsp;&nbsp;<if condition="$v.flag gt 0"><span style="color:#079B04;">[{$v.flag|flag2Str}]</span></if>
+                     <if condition="$v.litpic neq ''">
+                        <div class="img-w">
+                            <img src="{$v.litpic}">
+                        </div>
+                     </if>
+                        -->
+                    </td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Product/status',array('id' => $v['id'], 'pid' => $pid))}">
+                            <if condition="4 & $v['flag'] = $v['flag']">
+                                <font color="blue">是</font>
+                            <else/>
+                                <font color="red">否</font>
+                            </if>
+                        </a>
+
+                    </td>
+                    <td align="center">{$v.catename}</td>
+                    <td align="center">{$v.click}</td>
+                    <td align="center">{$v.publishtime|date='Y-m-d H:i:s', ###}</td>
+                    <td align="center">
+                    <if condition='ACTION_NAME eq "index"'>
+                    <if condition="($v.flag & B_JUMP) && !empty($v['jumpurl']) ">
+                    <a href="{$v.jumpurl|goLinkEncode}" target="_blank">查看</a>
+                    <else/>
+                    <a href="__ROOT__/index.php?m=Show&a=index&id={$v['id']}&cid={$v['cid']}" target="_blank">查看</a>
+                    </if>
+                    <a href="{:U(GROUP_NAME. '/Product/edit',array('id' => $v['id'],'pid' => $pid,'p' => $p))}">编辑</a>
+                    <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Product/del',array('id' => $v['id'], 'pid' => $pid))}')">删除</a>
+                    <else/>
+                    <a href="javascript:void()" onclick="dr_dialog_del('确实要还原该项吗？','{:U(GROUP_NAME. '/Product/restore',array('id' => $v['id'], 'pid' => $pid))}')">还原</a>
+                    <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Product/clear',array('id' => $v['id'], 'pid' => $pid))}',{$v['id']})">彻底删除</a>
+                    </if>
+    				</td>
+                </tr>
+                </foreach>
+                <script type="text/javascript">
+                    $(function () {
+                        var postUrl = "{:U(GROUP_NAME.'/Product/pxajax')}";
+                        $('.pxajax').focus(function () {
+                            $(this).removeClass('noborder');
+                        }).blur(function () {
+                            $(this).addClass('noborder');
+                            var _t = $(this);
+                            $.ajax({
+                             'type': 'POST',
+                             'dataType' :'json',
+                             'url': postUrl ,
+                             'data': 'val='+_t.attr('value')+'&cid='+_t.attr('name'),
+                             success: function (data) {
+                                    location.reload();
+                                } 
+                            });
+                        });
+
+                        $('.abtitle').mouseover(function () {
+                            $(this).find('.img-w').css('display','block');
+                        });
+                        $('.abtitle').mouseout(function () {
+                            $(this).find('.img-w').css('display','none');
+                        });
+
+
+                    });
+                </script>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="7">
+                    <input type="hidden" name="flagss" id="flagss">
+                    &nbsp;&nbsp;<a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Product/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>&nbsp;&nbsp;
+                    <if condition='ACTION_NAME eq "index"'>
+                        <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Product/del', array('batchFlag' => 1, 'pid' => $pid))}')" class="onloading"><em>删除</em></a>
+                        &nbsp;&nbsp;&nbsp;
+                        更改类型为 ：
+                        <foreach name='flagtypelist' item='v'>
+                        <label class="yh_label"><input type='checkbox' name='akey' value='{$key}' <if condition="$key eq B_JUMP">id="CK_JumpUrl"</if> /> {$v}</label>&nbsp; 
+                        </foreach>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="javascript:void();" onclick="dr_confirm_shux_all('确实要更改选择项属性吗？','{:U(GROUP_NAME.'/Product/shux', array('batchFlag' => 1, 'pid' => $pid))}')" class="onloading"><em>修改</em></a>
+                    <else/>
+                        <a href="javascript:void()" onclick="dr_confirm_hy_all('确实要还原选择项吗？','{:U(GROUP_NAME.'/Product/restore',  array('batchFlag' => 1, 'pid' => $pid))}')" class="onloading"><em>还原</em></a><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        <a href="javascript:void()" onclick="dr_confirm_del_all('确实要彻底删除选择项吗？','{:U(GROUP_NAME.'/Product/clearBatch', array('batchFlag' => 1, 'pid' => $pid))}',false,'alldel99999999')" class="onloading"><em>彻底删除</em></a>
+                    </if>
+                </td>
+            </tr>
+        </table>
+    </form>
+  <if condition="$is_showpage neq 1">
+    <form action="?" method="post" id="cpform" name="cpform">
+    <table width="100%">
+        <td>
+            <div style="float:right;">{$page}</div>
+            <div style="float:right;">
+                每页&nbsp;
+                <input type="hidden" name="pid" value="{$pid}">
+                <select name="pagerows" class="pagerows">
+                    <option value="10" <if condition='$pagerows eq 10'>selected</if>>10</option>
+                    <option value="20" <if condition='$pagerows eq 20'>selected</if>>20</option>
+                    <option value="30" <if condition='$pagerows eq 30'>selected</if>>30</option>
+                    <option value="40" <if condition='$pagerows eq 40'>selected</if>>40</option>
+                    <option value="50" <if condition='$pagerows eq 50'>selected</if>>50</option>
+                </select>&nbsp;条&nbsp;&nbsp;
+            </div>
+        </td>
+    </table>
+    </form>
+    <script type="text/javascript">
+    $(function(){ 
+        $(".pagerows").change(function(){
+            $('#cpform').submit();
+        });
+    });
+    </script>
+  </if>
+    </div>
+</div>
+</body>
+</html>

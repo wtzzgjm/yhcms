@@ -1,0 +1,16 @@
+/*自己写*/
+@charset "gb2312";
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+body,textarea,input,button,select{font:12px/1.14 arial,\5b8b\4f53;color:#333;outline:0;}
+html,body {width:100%;background:#fff;height:100%;font-size:100%;}
+html,body,img,iframe{border:0;}
+* {font-weight:100;}
+table {border-spacing:0;border="0" cellspacing="0"}
+textarea{overflow:auto;resize:none;}
+input {border:1px solid #6f6f6f;}
+li{list-style:none;}
+a,button,submit{cursor:pointer;}
+a,a:hover{text-decoration:none;}
+
+.clear {clear:both;}

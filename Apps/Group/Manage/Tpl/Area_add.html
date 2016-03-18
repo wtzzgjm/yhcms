@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Area/index')}" class="onloading"><em>地区管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Area/add')}" class="onloading on"><em>添加地区</em></a><span>|</span>
+        <a href="#" class="onloading"><em>编辑地区</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Area/add')}">
+		<dl>
+			<dt>名称：</dt>
+			<dd>
+				<input type="text" name="name" class="inp_one"/>
+			</dd>
+		</dl>
+		<dl>
+			<dt>简称：</dt>
+			<dd>
+				<input type="text" name="sname" class="inp_one"/>
+			</dd>
+		</dl>
+		<dl>
+			<dt>英文名称：</dt>
+			<dd>
+				<input type="text" name="ename" class="inp_one"/>
+			</dd>
+		</dl>
+		<dl>
+			<dt>推荐地区：</dt>
+			<dd>
+				<input type='radio' name='is_top[]' value='0' checked="checked"/>&nbsp;&nbsp;不推荐&nbsp&nbsp;
+				<input type='radio' name='is_top[]' value='1' />&nbsp;&nbsp;推荐&nbsp;
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt>上级：</dt>
+			<dd>
+				<select name="pid">
+					<option value="0">顶级</option>
+					<foreach name='arealist' item='v'>
+						<option value="{$v.id}" <if condition="$pid eq $v['id']">selected</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>	
+		<dl>
+			<dt> 排序：</dt>
+			<dd>
+				<input type="text" name="sort" class="inp_one" />
+			</dd>
+		</dl>
+		<div class="form_b">	
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

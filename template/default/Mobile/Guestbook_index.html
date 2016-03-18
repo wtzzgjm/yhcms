@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/{$mobile_css}.css">
+</head>
+<body>
+	<div class="container">
+		<include file="$tpl_Public_add1" />
+		<div class="content-container">
+			<div class="guestbook-w">
+				<header>
+					<h2>在线留言</h2>
+				</header>
+
+				<form action="{:U(GROUP_NAME. '/Guestbook/add')}/" method="post">
+					<div class="input-group">
+						<i class="fa fa-user fa-gray fa-fw"></i>
+						<input type="text" placeholder="请输入姓名"name="username" >
+					</div>
+
+					<div class="input-group">
+						<i class="fa fa-envelope-o fa-gray fa-fw"></i>
+						<input type="text" placeholder="请输入电子邮件" name="tel" >
+					</div>
+
+					<div class="input-group">
+						<i class="fa fa-phone fa-gray fa-fw"></i>
+						<input type="text" placeholder="请输入联系电话" name="email" >
+					</div>
+
+					<div class="text-group">
+						<i class="fa fa-edit fa-gray fa-fw"></i>
+						<textarea name="content" placeholder="请输入留言内容"></textarea>
+					</div>
+
+					<div class="input-group vcode">
+						<i class="fa fa-file-image-o fa-gray fa-fw"></i>
+						<input type="text" placeholder="请输入验证码" name="vcode">
+						<img src="<yhcms:vcodeurl />/" onclick="changeVcode(this)"/>
+					</div>
+					<script type="text/javascript">
+						function changeVcode(obj){
+							obj.src = '<yhcms:vcodeurl />/'+ '#'+Math.random();
+							return false;
+						}
+					</script>
+
+					<div class="sub-group">
+						<input type="submit" placeholder="提 交">
+					</div>
+				</form>
+			</div>
+
+			<include file="$tpl_Public_footer" />
+		</div>
+		<include file="$tpl_Public_header" />
+
+	</div>
+
+
+	<script type="text/javascript" src="__PUBLIC__/js/common.min.js"></script>
+	<script type="text/javascript">
+		yhcmsApp.rem().windowSize().slidebar().searchBtn();
+	</script>
+</body>
+</html>

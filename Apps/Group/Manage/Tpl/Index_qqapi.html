@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script>
+$(function(){
+    $urlstr = "{$urlstr}";
+    
+    $url = "http://qq.yhcompany.cn/api_yhcms.php";
+
+    $.ajax({type: "POST", dataType:"JSONP", url: $url, data: {url:$urlstr},jsonpCallback:"person",
+        success: function(data) {
+            if (data.status == 1) {
+                $("#showtext").html("域名验证成功！<br><a href='http://qq.yhcompany.cn' target='_blank'>点击查看访问记录</a>");
+            } else {
+                $("#showtext").html("域名验证失败，请联系业务员登记开通QQ访问统计！<br><a href='http://www.yhcms.cn' target='_blank'>点击访问官网</a>");
+            }
+        },
+        error: function(HttpRequest, ajaxOptions, thrownError) {
+            alert(thrownError);
+            $("#showtext").html("接口访问有误，请联系开发人员！<br><a href='http://www.yhcms.cn/' target='_blank'>点击访问官网</a>");
+        }
+    });
+});
+</script>
+<style>
+.showtext{ margin:100px auto; font-size: 20px; font-weight: bold; line-height: 45px; text-align: center;}
+.showtext a{color:red;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Index/qqapi')}" class="onloading on"><em>QQ访问统计</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="showtext" id="showtext"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Index/sql')}" class="onloading on"><em>版本升级-执行SQL</em></a><span>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<font color="red"><h3>{$zxstr}</h3></font>
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Index/sql')}">
+		<dl>
+			<dt> SQL：</dt>
+			<dd>
+				<textarea name="sql" cols="100" rows="10"></textarea>
+				<br><font color="red">* 多条SQL语句请使用 "***" 间隔(三个星号)</font>
+			</dd>
+		</dl>
+		<div class="form_b">		
+			<input type="submit" class="button" id="submit" value="提 交"><input type="hidden" name="pid" value="{$pid}" />
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

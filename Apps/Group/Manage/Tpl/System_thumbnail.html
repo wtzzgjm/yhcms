@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>缩略图设置</em></a>
+    </div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/thumbnail')}">
+		<div>
+		<dl>
+			<dt>允许上传大小：</dt>
+			<dd>
+				<input type="text" name="cfg_upload_maxsize" class="inp_one inp_w250" value="{$Think.config.cfg_upload_maxsize}" />
+			</dd>
+			<dd class="desc">KB</dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt>缩略图生成：</dt>
+			<dd>
+				<input type="text" name="cfg_imgthumb_width" class="inp_one inp_w250" value="{$Think.config.cfg_imgthumb_width}" />
+			</dd>
+			<dd class="desc" style="width:500px"> 固定宽度等比缩放，填写600则生成宽度为600，高度自适应的图片</dd>
+			<dd></dd>
+		</dl>
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

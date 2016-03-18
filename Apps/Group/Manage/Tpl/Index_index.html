@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<title>YHCMS后台管理中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/table_form.css" />
+<script type="text/javascript" src="__PUBLIC__/js/zh-cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/artDialog/jquery.artDialog.js?skin=default"></script>
+<script type="text/javascript" src="__PUBLIC__/js/validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/dayrui.js"></script>
+<script type="text/javascript">
+$(function(){
+    //var is_member_hide = 0;
+    if ($('#navigation').height() >= 80) {
+        //$("#dr_member").hide();
+        //is_member_hide = 1;
+        $(".dr_module_menu").remove();
+        $("#dr_select_module").show();
+    }
+    /*
+	if ($(window).width() <= 1024) {
+		if ($('.main-nav').width() > 600 && is_member_hide == 0) {
+            $("#dr_top_nav").hide();
+        }
+		$("#dr_search_submit").hide();
+	} else if ($(window).width() < 1400) {
+		if ($('.main-nav').width() > 800 && is_member_hide == 0) {
+            $("#dr_top_nav").hide();
+        }
+	}
+	*/
+	$("#dr_select_site, #dr_select_module").bind({
+		'mouseover':function(){
+			$(this).addClass("open");
+		},
+		'mouseout':function(){
+			$(this).removeClass("open");
+		}
+	});
+	$("#dr_member").bind({
+		'mouseover':function(){
+			$(this).addClass("open");
+		},
+		'mouseout':function(){
+			$(this).removeClass("open");
+		}
+	});
+    $('.toggle-nav').click(function(e){
+        e.preventDefault();
+        hideNav();
+    });
+    wSize();
+    $(".toggle-subnav").click(function (e) {
+        e.preventDefault();
+        var $el = $(this);
+        $el['parents'](".subnav").toggleClass("subnav-hidden").find('.subnav-menu,.subnav-content').slideToggle("fast");
+        $el['find']("i").toggleClass("fa fa-angle-down").toggleClass("fa fa-angle-right");
+    
+        if($("#left").hasClass("mobile-show") || $("#left").hasClass("sidebar-fixed")){
+            getSidebarScrollHeight();
+            $("#left").getNiceScroll().resize().show();
+        }
+    });
+		$.getScript("http://www.dayrui.com/index.php?c=sys&m=version&id=17&admin=admin.php");
+		$("#sitelist li").click(function(){
+		var id=$(this).attr('id');
+		art.dialog.confirm("<font color=red><b><font color=red><b>是否要切换站点？</b></font></b></font>", function(){
+			// ajax提交验证
+			$.ajax({type: "POST",dataType:"json", url: "admin.php?c=site&m=select", data: {id: id},
+				success: function(data) {
+					if (data.status == 1) {
+						//验证成功
+						$.dialog.tips(data.code.msg, 3, 1);
+						$("#rightMain").attr('src', $("#rightMain").attr('src'));
+						$("title").html(data.code.title);
+						$("#brand").attr('href', data.code.url);
+						$("#site_homepage").attr('href', data.code.url);
+						$("#site_homepage").attr('title', data.code.site);
+						$("#site_member").attr('href', data.code.url+'member/');
+					} else {
+						$.dialog.tips(data.code, 5);
+					}
+					return true;
+				},
+				error: function(HttpRequest, ajaxOptions, thrownError) {
+
+				}
+			});
+			return true;
+		});
+	});
+});
+function getSidebarScrollHeight(){
+    var $el = $("#left"),
+    $w = $(window),
+    $nav = $("#navigation");
+    var height = $w['height']();
+
+    if(($nav['hasClass']("navbar-fixed-top") && $w['scrollTop']() == 0) || $w['scrollTop']() == 0) height -= 40;
+
+    if($el['hasClass']("sidebar-fixed") || $el['hasClass']("mobile-show")){
+        $el['height'](height);
+    }
+}
+function hideNav(){
+    $("#left").toggle().toggleClass("forced-hide");
+    if($("#left").is(":visible")) {
+        $("#main").css("margin-left", $("#left").width());
+    } else {
+        $("#main").css("margin-left", 0);
+    }
+
+    if($('.dataTable').length > 0){
+        var table = $.fn.dataTable.fnTables(true);
+        if ( table.length > 0 ) {
+            $(table).each(function(){
+                if($(this).hasClass("dataTable-scroller")){
+                    $(this).dataTable().fnDraw();
+                }
+            });
+            $(table).dataTable().fnAdjustColumnSizing();
+        }
+    }
+
+    if($(".calendar").length > 0){
+        $(".calendar").fullCalendar("render");
+    }
+}
+if(!Array.prototype.map)
+	Array.prototype.map = function(fn,scope) {
+	  var result = [],ri = 0;
+	  for (var i = 0,n = this.length; i < n; i++){
+		if(i in this){
+		  result[ri++]  = fn.call(scope ,this[i],i,this);
+		}
+	}
+	return result;
+};
+
+var getWindowSize = function(){
+	return ["Height","Width"].map(function(name){
+	  return window["inner"+name] ||
+		document.compatMode === "CSS1Compat" && document.documentElement[ "client" + name ] || document.body[ "client" + name ]
+	});
+}
+window.onload = function (){
+	if(!+"\v1" && !document.querySelector) { // for IE6 IE7
+	  document.body.onresize = resize;
+	} else { 
+	  window.onresize = resize;
+	}
+	function resize() {
+		wSize();
+		return false;
+	}
+}
+function wSize(){
+	var str=getWindowSize();
+	var strs= new Array(); //定义一数组
+	strs=str.toString().split(","); //字符分割
+	var heights = strs[0]-80,Body = $('body');$('#rightMain').height(heights);
+}
+function _M(mid, sid, url, name) {
+	$('.main-nav > li, .dropdown-menu > li').removeClass("active");
+	$('#_M_'+mid).addClass("active");
+	$(".d_menu").hide();
+	$("#D_M_"+mid).show();
+	_MP(sid, url);
+}
+function _MP(id, url) {
+	$("#rightMain").attr('src', url);
+	$(".subnav-menu > li").removeClass("dropdown");
+	$("#_MP_"+id).addClass("dropdown");
+    $("#_MP_"+id).parent().show();
+    $("#_MP_"+id).parent().parent().attr('class', 'subnav');
+    if (url.indexOf('http') == -1) {
+        dr_loading();
+    }
+}
+function _MAP(mid, sid, url) {
+	$('.main-nav > li').removeClass("active");
+	$('#_M_'+mid).addClass("active");
+	$(".d_menu").hide();
+	$("#D_M_"+mid).show();
+	dr_clear_map();
+	_MP(sid, url);
+}
+function dr_get_map() {
+	$("#dr_backdrop").show();
+	$("#modal-map").show();
+}
+function dr_clear_map() {
+	$("#dr_backdrop").hide();
+	$("#modal-map").hide();
+}
+function dr_loading() {
+	$('.page-loading').remove();
+	$('body').append('<div class="page-loading"><img src="__PUBLIC__/images/loading-spinner-grey.gif"/>&nbsp;&nbsp;<span>数据加载中...</span></div>');
+}
+</script>
+<script type="text/javascript" src="http://master.yhcms.cn/index.php?m=Api&a=c_config"></script>
+</head>
+<body scroll="no" style="overflow:hidden">
+<!--nav start-->
+<div id="navigation">
+  <div class="container-fluid"> <a href="#" id="brand" target="_blank"></a> <a href="javascript:;" class="toggle-nav" rel="tooltip" data-placement="bottom"><i class="fa fa-reorder"></i></a>
+    <ul class="main-nav">
+      <li id="_M_0" class=""> <a href="javascript:_M(0,'11','{:U(GROUP_NAME. '/System/site')}','常用功能')"> <span>常用功能</span> </a> </li>
+      <li id="_M_1" class=""> <a href="javascript:_M(1,'21','{:U(GROUP_NAME.'/'. ucfirst($connav['tablename']) .'/index', array('pid'=>$connav['id']))}','内容管理')"> <span>内容管理</span> </a> </li>
+      <li id="_M_2" class=""> <a href="javascript:_M(2,'31','{:U(GROUP_NAME. '/Banner/index')}','广告管理')"> <span>广告管理</span> </a> </li>
+      <li id="_M_3" class=""> <a href="javascript:_M(3,'41','{:U(GROUP_NAME. '/System/seo')}','营销设置')"> <span>营销设置</span> </a> </li>
+
+      <li id="_M_4" class=""> <a href="javascript:_M(4,'51','{:U(GROUP_NAME. '/System/mobile')}','WAP设置')"> <span>WAP设置</span> </a> </li>
+
+      <li id="_M_5" class=""> <a href="javascript:_M(5,'61','{:U(GROUP_NAME. '/System/weixin')}','微信设置')"> <span>微信设置</span> </a> </li>
+      <li id="_M_6" class=""> <a href="javascript:_M(6,'71','{:U(GROUP_NAME. '/Personal/index')}','我的帐户')"> <span>我的帐户</span> </a> </li>
+      <li id="_M_7" class=""> <a href="http://www.yhcms.cn/help/cover/3.html" target="_blank"> <span>帮助手册</span> </a> </li>
+    </ul>
+    <div class="user">
+      <ul class="icon-nav" id="dr_top_nav" style="width:auto; height:auto;">
+        <li class="dropdown"> <a class="dropdown-toggle" href="{:C('cfg_weburl')}" target="_blank" id="site_homepage"><i class="fa fa-home"></i></a> </li>
+        <li class="dropdown"> <a class="dropdown-toggle" href="{:U(GROUP_NAME. '/System/clearCache')}" title="更新全站缓存" target="right"><i class="fa fa-refresh"></i></a> </li>
+      </ul>
+      <div class="dropdown" id="dr_member"> 
+      	<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">{$Think.session.yang_adm_username}&nbsp;<img style="width:27px;height:27px;" src="__PUBLIC__/images/avatar_45.png" /></a>
+        <ul class="dropdown-menu pull-right">
+          <li><a href="{:U(GROUP_NAME.'/Login/logout')}"><i class="fa fa-sign-out"></i> 退出系统</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--nav end-->
+<div class="container-fluid" id="content">
+  	<!--left start-->
+  	<div id="left">
+	   	<div class="d_menu" id="D_M_0">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>常用功能</span></a></div>
+		        <ul class="subnav-menu" style="">
+		          	<li id="_MP_11" class="dropdown"><a href="javascript:_MP('11', '{:U(GROUP_NAME.'/System/site')}');" >基本信息</a></li>
+		          	<li id="_MP_12"><a href="javascript:_MP('12', '{:U(GROUP_NAME.'/System/thumbnail')}');" >缩略图设置</a></li>
+		          	<li id="_MP_13" ><a href="javascript:_MP('13', '{:U(GROUP_NAME.'/Category/index')}');" >栏目设置</a></li>
+		          	<li id="_MP_14" ><a href="javascript:_MP('14', '{:U(GROUP_NAME.'/Nav/index')}');" >导航设置</a></li>
+		          	<li id="_MP_20"><a href="javascript:_MP('20', '{:U(GROUP_NAME.'/System/guide')}');" >引导页设置</a></li>
+		          	<li id="_MP_15"><a href="javascript:_MP('15', '{:U(GROUP_NAME.'/Database/index')}');" >数据备份</a></li>
+		          	<li id="_MP_16"><a href="javascript:_MP('16', '{:U(GROUP_NAME.'/Rbac/index')}');" >管理员管理</a></li>
+		          	<li id="_MP_17"><a href="javascript:_MP('17', '{:U(GROUP_NAME.'/Log/index')}');" >系统日志</a></li>
+		          	<li id="_MP_18"><a href="javascript:_MP('18', '{:U(GROUP_NAME.'/Order/show')}');" >在线订购</a></li>
+		          	<li id="_MP_19"><a href="javascript:_MP('19', '{:U(GROUP_NAME.'/Guestbook/index')}');" >留言管理</a></li>
+		        </ul>
+	      	</div>
+	    </div>
+	    <div class="d_menu" id="D_M_1"style="display:none">
+	      	<div class="subnav subnav-hidden">
+	        	<div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>内容管理</span></a></div>
+	        	<ul class="subnav-menu">
+	          		<foreach name='menudoclist' item='v'>			
+						<li id="_MP_2{$v['id']}"><a href="javascript:_MP('2{$v['id']}', '{:U(GROUP_NAME.'/'. ucfirst($v['tablename']) .'/index', array('pid'=>$v['id']))}');" >{$v.name}</a></li>
+					</foreach>
+	        	</ul>
+	      	</div>
+	    </div>
+	    <div class="d_menu" id="D_M_2" style="display:none">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>广告管理</span></a></div>
+		        <ul class="subnav-menu">
+			        <li id="_MP_31" class="dropdown"><a href="javascript:_MP('31', '{:U(GROUP_NAME.'/Banner/index')}');" >幻灯片管理</a></li>
+			        <li id="_MP_32"><a href="javascript:_MP('32', '{:U(GROUP_NAME.'/Block/index')}');" >标签管理</a></li>
+		        </ul>
+	      	</div>
+    	</div>
+    	<div class="d_menu" id="D_M_3" style="display:none">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>营销设置</span></a></div>
+		        <ul class="subnav-menu">
+			        <li id="_MP_41" class="dropdown"><a href="javascript:_MP('41', '{:U(GROUP_NAME.'/System/seo')}');" >SEO参数</a></li>
+			        <li id="_MP_42"><a href="javascript:_MP('42', '{:U(GROUP_NAME.'/Index/sitemap')}');" >站点地图</a></li>
+			        <li id="_MP_43"><a href="javascript:_MP('43', '{:U(GROUP_NAME.'/Sitelink/index')}');" >热门标签</a></li>
+			        <li id="_MP_44"><a href="javascript:_MP('44', '{:U(GROUP_NAME.'/Area/index')}');" >区域管理</a></li>
+			       <!--  <li id="_MP_45"><a href="javascript:_MP('45', '{:U(GROUP_NAME.'/Index/qqapi')}');" >来访统计</a></li> -->
+			        <li id="_MP_46"><a href="javascript:_MP('46', '{:U(GROUP_NAME.'/Link/index')}');" >友情连接</a></li>
+			        <li id="_MP_47"><a href="javascript:_MP('47', '{:U(GROUP_NAME.'/Index/keyword')}');" >关键词生成</a></li>
+			        <li id="_MP_48"><a href="javascript:_MP('48', '{:U(GROUP_NAME.'/System/keyword')}');" >一键生成栏目关键词</a></li>
+		        </ul>
+	      	</div>
+    	</div>
+
+    	<div class="d_menu" id="D_M_4" style="display:none">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>WAP 设置</span></a></div>
+		        <ul class="subnav-menu">
+		        	<li id="_MP_51"><a href="javascript:_MP('51', '{:U(GROUP_NAME.'/System/mobile')}');" >WAP 设置</a></li>
+			        <li id="_MP_52" class="dropdown"><a href="javascript:_MP('52', '{:U(GROUP_NAME.'/Navwap/index')}');" >WAP 菜单管理</a></li>
+			        <li id="_MP_53"><a href="javascript:_MP('53', '{:U(GROUP_NAME.'/Bannerwap/index')}');" >WAP 幻灯管理</a></li>
+		        </ul>
+	      	</div>
+    	</div>
+
+
+    	<div class="d_menu" id="D_M_5" style="display:none">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>微站设置</span></a></div>
+		        <ul class="subnav-menu">
+			        <li id="_MP_61" class="dropdown"><a href="javascript:_MP('61', '{:U(GROUP_NAME.'/System/weixin')}');" >微信管理</a></li>
+			        <li id="_MP_62"><a href="javascript:_MP('62', '{:U(GROUP_NAME.'/Wxmenu/index')}');" >自定义菜单</a></li>
+		        </ul>
+	      	</div>
+    	</div>
+    	<div class="d_menu" id="D_M_6" style="display:none">
+	      	<div class="subnav subnav-hidden">
+		        <div class="subnav-title"><a href="#" class="toggle-subnav"><i class="fa fa-angle-down"></i><span>我的账户</span></a></div>
+		        <ul class="subnav-menu">
+			        <li id="_MP_71" class="dropdown"><a href="javascript:_MP('71', '{:U(GROUP_NAME.'/Personal/index')}');" >修改我的信息</a></li>
+	          		<li id="_MP_72"><a href="javascript:_MP('72', '{:U(GROUP_NAME.'/Personal/pwd')}');" >修改密码</a></li>
+		        </ul>
+	      	</div>
+    	</div>
+  	</div>
+  	<!--left end-->
+  	<div id="main">
+ 		<!--right start-->
+    	<iframe name="right" id="rightMain" src="{:U(GROUP_NAME. '/Public/main')}" frameborder="false" scrolling="auto" style="border:none; margin-bottom:0px;" width="100%" height="auto" allowtransparency="true"></iframe>
+  		<!--right end-->
+    	<div style="background-color:#EEEEEE; height:100px; padding-top:8px; text-align:right; padding-right:10px;margin-top: -5px;" ><font id="bt_right"></font><font>{$version}</font></div>
+  	</div>
+</div>
+<div id="dr_backdrop" class="modal-backdrop in hide"></div>
+</body>
+</html>

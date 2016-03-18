@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Rbac/role')}" class="onloading on"><em>用户组列表</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Rbac/addRole')}" class="onloading"><em>添加管理员</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">  
+    <form action="{:U(GROUP_NAME.'/Rbac/delRole')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>用户组名称</th>
+                    <th>描述</th>
+                    <th width="35px">状态</th>
+                    <th width="150px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='role' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td>{$v.name}</td>
+                    <td>{$v.remark}</td>
+                    <td align="center"><if condition="$v['status']">是<else/>否</if></td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Rbac/access',array('rid' => $v['id']))}">权限设置</a>
+        				<a href="{:U(GROUP_NAME. '/Rbac/addRole',array('id' => $v['id']))}">修改</a>
+        				<a href="{:U(GROUP_NAME. '/Rbac/delRole',array('id' => $v['id']))}" onclick="del('{:U(GROUP_NAME. '/Rbac/delRole',array('id' => $v['id']))}'); return false;">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Rbac/delRole', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                </td>
+                <td colspan="5" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

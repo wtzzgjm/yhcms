@@ -1,0 +1,71 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^diqu.html$ index.php?m=Index&a=diqu [QSA,PT,L]
+
+RewriteRule ^index.html$ index.php?m=Index&a=home [QSA,PT,L]
+
+RewriteRule ^tag/(.*).html$ index.php?m=Index&a=tag&tag=$1 [QSA,PT,L]
+
+RewriteRule ^weixinapi.html$ index.php?m=Index&a=weixinapi [QSA,PT,L]
+
+RewriteRule ^sitemap.html$ index.php?m=Index&a=sitemap [QSA,PT,L]
+
+RewriteRule ^install/(.*)$ index.php?m=Install&a=$1 [QSA,PT,L]
+
+RewriteRule ^Public/verify.html$ index.php?m=Public&a=verify [QSA,PT,L]
+
+RewriteRule ^diqu_(.*)/(.*)/$ index.php?m=List&a=index&e=$2&diqu=$1 [QSA,PT,L]
+
+RewriteRule ^diqu_(.*)/(.*)/index.html$ index.php?m=List&a=index&e=$2&diqu=$1 [QSA,PT,L]
+
+RewriteRule ^diqu_(.*)/(.*)/(.*).html$ index.php?m=Show&a=index&id=$3&diqu=$1&e=$2 [QSA,PT,L]
+
+RewriteRule ^diqu_(.*)/$ index.php?m=Index&a=index&diqu=$1 [QSA,PT,L]
+
+RewriteRule ^diqu_(.*)$ index.php?m=Index&a=index&diqu=$1 [QSA,PT,L]
+
+RewriteRule ^Data/ueditor/dialogs/(.*)/(.*).html$ Data/ueditor/dialogs/$1/$2.html [QSA,PT,L]
+
+RewriteRule ^Manage/(.*).html$ index.php/Manage/$1 [QSA,PT,L]
+
+RewriteRule ^Manage/(.*)$ index.php/Manage/$1 [QSA,PT,L]
+
+RewriteRule ^Mobile/(.*)/(.*).html$ index.php?g=Mobile&m=Show&a=index&id=$2&e=$1 [QSA,PT,L]
+
+RewriteRule ^Mobile/(.*)/p/(.*)/$ index.php?g=Mobile&m=List&a=index&e=$1&p=$2 [QSA,PT,L]
+
+RewriteRule ^Mobile/(.*)/(.*)/$ index.php?g=Mobile&m=$1&a=$2 [QSA,PT,L]
+
+RewriteRule ^Mobile/(.*)/$ index.php?g=Mobile&m=List&a=index&e=$1 [QSA,PT,L]
+
+RewriteRule ^App/$ index.php?g=App&m=Index [QSA,PT,L]
+
+RewriteRule ^App/(.*)/(.*).html$ index.php?g=App&m=Show&a=index&id=$2&e=$1 [QSA,PT,L]
+
+RewriteRule ^App/(.*)/p/(.*)/$ index.php?g=App&m=List&a=index&e=$1&p=$2 [QSA,PT,L]
+
+RewriteRule ^App/(.*)/(.*)/$ index.php?g=App&m=$1&a=$2 [QSA,PT,L]
+
+RewriteRule ^App/(.*)/$ index.php?g=App&m=list&a=index&e=$1 [QSA,PT,L]
+
+RewriteRule ^app/(.*)/(.*).html$ index.php?g=app&m=Show&a=index&id=$2&e=$1 [QSA,PT,L]
+
+RewriteRule ^app/(.*)/p/(.*)/$ index.php?g=app&m=List&a=index&e=$1&p=$2 [QSA,PT,L]
+
+RewriteRule ^app/(.*)/(.*)/$ index.php?g=app&m=$1&a=$2 [QSA,PT,L]
+
+RewriteRule ^Order/(.*)$ index.php?m=Show&a=order&id=$1 [QSA,PT,L]
+
+RewriteRule ^(.*)/index.html$ index.php/$1 [QSA,PT,L]
+
+RewriteRule ^(.*)/(.*)_(.*).html$ index.php?m=Show&a=index&id=$2&e=$1&cwkey=$3 [QSA,PT,L]
+
+RewriteRule ^(.*)/(.*).html$ index.php?m=Show&a=index&id=$2&e=$1 [QSA,PT,L]
+
+RewriteRule ^(.*)/$ index.php/$1 [QSA,PT,L]
+
+RewriteRule ^(.*).html$ index.php/$1 [QSA,PT,L]
+</IfModule>

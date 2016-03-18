@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" href="__PUBLIC__/css/index.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/table_form.css" />
+<link rel='stylesheet' type="text/css" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		//图片上传配置区
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;   //图片上传提交地址
+		window.UEDITOR_CONFIG.imagePath = "" ; //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置      
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;////图片在线管理的处理地址
+		window.UEDITOR_CONFIG.imageManagerPath = ""; //图片在线管理修正地址  
+			UE.getEditor('content');
+
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+<script type="text/javascript">
+$(function () {
+
+
+	//图片集上传
+	var picture_show = $('#picture_show');
+	var picture_tip = $(".picture_tip");
+	$("#picture_upload").wrap("<form id='picture_form' action='{:U(GROUP_NAME. '/Public/upload')}' method='post' enctype='multipart/form-data'></form>");
+    $("#picture_upload").change(function(){
+    	if($("#picture_upload").val() == "") return;
+    
+		$("#picture_form").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+				picture_tip.html("上传中...");
+    		},
+			success: function(data) {
+				//picture_tip.html("<b>"+data.title+"("+data.size+"k)</b> <span class='delimg' rel='"+data.url+"'>删除</span>");
+				if(data.state == 'SUCCESS'){	
+					picture_tip.html(""+ data.title +" 上传成功("+data.size+"k)");					
+					var img = data.url;
+					var picture_html= '<div class="picture_item"><img src="'+ img +'" width="120"><div class="picture_del">删除</div><div class="picture_go_up">前移</div><input type="hidden" name="pictureurls[]" value="'+ img +'" /></div>'
+					picture_show.append(picture_html);
+					//picture_show.parent().find("span").remove().end().append("<span class='error'>描述不能为空</span>");
+				}else {
+					picture_tip.html(data.state);	
+				}			
+
+			},
+			error:function(xhr){
+				picture_tip.html("上传失败"+xhr);
+
+			}
+		});
+	});
+
+	
+
+});
+
+$(function () {
+	//jquery1.7后没有live
+	//$(document).on 也行
+	$('#picture_show').on('mouseenter',"#picture_show>.picture_item",function(){
+			$(this).find('.picture_go_up').show();
+			$(this).find('.picture_del').show();
+		}).on('mouseleave',"#picture_show>.picture_item",function(){
+			$(this).find('.picture_go_up').hide();
+			$(this).find('.picture_del').hide();
+		}
+	); 
+
+    $('#picture_show').on('click','#picture_show .picture_go_up',function () {
+        var parent = $(this).parent();
+        if (parent.index() == 0){
+        }else{
+        	parent.prev().before(parent);
+        	$(this).hide();
+        	parent.find('.picture_del').hide();
+        } 
+        
+    });
+
+
+
+    $('#picture_show').on('click','#picture_show .picture_del',function () {
+        var img = $(this).next().val();//下个元素input的值 
+		$(this).parent().remove();////移除父元素
+
+		return;
+		$.post("action.php?act=delimg",{imagename:pic},function(msg){
+			if(msg==1){
+				litpic_show.empty();
+			}else{
+				alert(msg);
+			}
+		});        
+    });
+
+    
+
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+     });
+	$url = "{:U(GROUP_NAME. '/Category/getmessage')}";
+	getmessage();
+    
+    checktext();
+	$("#description").keydown(function(){
+		checktext();
+	});
+});
+
+function checktext(){
+	$("#textCount").text($("#description").val().length)
+}
+function getmessage(){
+	$cid = $("#cid").val();
+	$.ajax({type: "POST",dataType:"json", url: $url, data: {cid:$cid}, 
+		success: function(data) {
+			$("#showmessage").html(data.info);
+		}
+	});
+}
+
+</script>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+       	<a href="#" class="onloading"><em>图片集列表</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Picture/add')}" class="onloading on"><em>添加图片集</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Picture/batchadd')}" class="onloading"><em>批量添加图片集</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Picture/trach')}" class="onloading"><em>回收站</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Picture/add')}">
+
+		<div class="title-info">基本设置</div>
+		<dl>
+			<dt>标题：</dt>
+			<dd>
+				<input type="text" name="title" id="title" class="inp_large" />
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 所属栏目：</dt>
+			<dd class="selectWrap">
+				<select class="catelist" name="cid">
+					<foreach name='cate' item='v'>
+					<option value="{$v.id}" <if condition="($pid eq $v['id']) OR ($Think.session.picCate eq $v['id'])">selected="selected"</if> <if condition="$v['isdown'] eq 1">disabled="disabled"</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+				
+				<!-- <div id="showmessage"></div> -->
+			</dd>
+		</dl>	
+
+		<dl>
+			<dt> 图集：</dt>
+			<dd>
+				<div class="litpic_show">				    
+					<div class="btn_up">
+				        <span>上传多图</span>
+				        <input id="picture_upload" type="file" name="mypic1">
+				    </div>
+				    <div class="picture_tip"></div>
+				    <div id="picture_show"></div>
+				</div>
+			</dd>
+		</dl>	
+
+		<dl>
+			<dt> 自定义属性：</dt>
+			<dd>
+				<foreach name='flagtypelist' item='v'>
+				<label><input type='checkbox' name='flags[]' value='{$key}' <if condition="$key eq B_JUMP">id="CK_JumpUrl"</if> /> {$v}</label>&nbsp; 
+				</foreach>
+			</dd>
+		</dl>
+
+		<dl id="JumpUrlDiv" style="display:none;">
+			<dt> 跳转网址：</dt>
+			<dd>
+				<input type="text" name="jumpurl" class="inp_large" />
+			</dd>
+		</dl>
+
+		
+		<div class="title-info">搜索引擎优化</div>
+		
+		<dl>
+			<dt> 关键词：</dt>
+			<dd>
+				<input type="text" name="keywords" id="keywords" class="inp_w250" />&nbsp;&nbsp;<input type="button" class="button" id="get_keywords" value="获 取">
+			</dd>
+			<dd class="desc" style="width:350px;">
+				为空则使用SEO参数设置中设置的title构成方式
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> TAG：</dt>
+			<dd>
+				<input type="text" name="tag" class="inp_large" /><span class="tip">多TAG之间用“,”隔开</span>
+			</dd>
+		</dl>		
+
+		
+		<dl>
+			<dt> 摘要：</dt>
+			<dd>				
+				<textarea name="description" id="description" class="tarea_default"></textarea>
+			</dd>
+			<dd class="desc" style="width:350px;">
+				100字以内(当前已输入：<span id="textCount"></span>)
+			</dd>
+		</dl>	
+
+		<div class="title-info">正文设置</div>
+		
+		<dl>
+			<dt> 内容：</dt>
+			<dd>
+				<textarea name="content" id="content"></textarea>
+			</dd>
+		</dl>
+		<!-- <dl>
+			<dt> 评论：</dt>
+			<dd>
+				<input type="radio" name="commentflag" value="1" checked="checked" />允许 <input type="radio" name="commentflag" value="0" />禁止
+			</dd>
+		</dl>	 -->
+		<div class="form_b">		
+			<input type="hidden" name="pid" value="{$pid}" />
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+</div>
+
+</body>
+</html>

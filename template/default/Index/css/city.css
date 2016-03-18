@@ -1,0 +1,13 @@
+.city-main {height: 100%;background: #fff;overflow: hidden;}
+.hot {border-bottom: 2px solid #53c3e9;padding-bottom: 8px;overflow: hidden;}
+.hot li {float: left;margin-right: 13px;}
+.hot a {display: block;line-height: 32px;padding: 0 26px;background: #f4f4f4;}
+.hot a:hover {color: #fff;background: red;}
+.city_list {padding: 10px 0;}
+.city-class {padding: 10px 0;line-height: 24px;overflow: hidden;border-bottom: 1px dashed #ddd;}
+.city-class span {width: 35px;height: 100%; float: left;padding-left: 25px;font-weight: bold;font-size: 18px;color: #444;}
+.city-class div {width: 923px; float: right;}
+.city-class a {padding: 1px 12px 1px 12px;float: left;white-space: nowrap;}
+.city-class a:hover {text-decoration:none;background:#eb2830;color:#fff;}
+.mapname span {width: auto;}
+.mapname div {width: 860px;}

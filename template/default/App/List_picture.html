@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$title}-<yhcms:cfg_webname /></title>
+<meta name="keywords" content="{$keywords}" />
+<meta name="description" content="{$description}" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/re.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/sliding.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/moveTime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layer.js"></script>
+<script>
+window.onload = function () {
+	publick();
+	sliding();
+	layer();
+}
+</script>
+</head>
+
+<body>
+<include file="$tpl_Public_header" />
+
+		<div class="prolist_box" id='aboutcont'>
+			<ul>
+			<yhcms:list typeid="$cid" pagesize='8'>
+				<li><a href="{$list.url}"><img src="{$list.litpic}"><div><span>{$list.title}</span><span>{$list.name}</span></div></a></li>
+			</yhcms:list>
+			</ul>
+			<div class='page'>
+				{$page}
+			</div>
+		</div>
+		<include file="$tpl_Public_footer" />
+	</div><!-- box end-->
+	<div class="sy" id="sy">
+		<div class="sy_tit" id="fh">{$cate.name}</div>
+		<yhcms:catlist typeid='$cid' >
+			<div class="sy_cont"><a href="{$catlist.url}">{$catlist.name}</a></div>
+		</yhcms:catlist>
+	</div>
+</div><!-- wrap end -->
+</body>
+</html>

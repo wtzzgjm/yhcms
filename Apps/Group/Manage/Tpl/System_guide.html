@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>引导页设置</em></a>
+    </div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/guide')}">
+		<div>
+		<dl>
+			<dt>引导页：</dt>
+			<dd>
+				<input type="radio" name="cfg_is_guide" value="1" <if condition="C('cfg_is_guide') eq 1">checked="checked"</if>>开启 
+				<input type="radio" name="cfg_is_guide" value="0" <if condition="C('cfg_is_guide') eq 0">checked="checked"</if>>关闭
+			</dd><em style="float:left;margin-left:15px;line-height:23px;color:#9e9e9e"> * 开启引导页开关后,请将引导页面模板命名为 Index_default.html </em>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

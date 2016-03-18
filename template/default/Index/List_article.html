@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+	<script type="text/javascript">
+		window.onload=function  () {
+			InterlacedColor('color','li',"#f2f2f2")
+		}
+	</script>
+</head>
+<body>
+	<div class="index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>当前位置:&nbsp;</span>
+					<yhcms:position />
+				</div>
+			</div>
+			<div class="main">
+				<div class="main-left">
+					<div class="main-left-center">
+						<div class="blue-title line-blue">
+							<div>{$pcate.name}</div>
+						</div>
+						<div class="index-article new-article">
+							<ul>
+							<yhcms:catlist typeid="2" limit="4">
+								<li><a href="{$catlist.areaurl}"><span>{$areasname}{$catlist.name}</span></a></li>
+							</yhcms:catlist>
+							</ul>
+						</div>
+						<div class="title">
+							<div>联系我们</div>
+						</div>
+						<div class="contact">
+							<ul>
+								<yhcms:block name='index_lxfs' />
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="blue-title">
+						<div>{$cate.name}</div>
+					</div>
+					<div class="new-list line-blue">
+						<ul id="color">
+						 <yhcms:list typeid="$cid" pagesize="16" titlelen="30">
+							<li><a href="{$list.url}">{$list.title}<span>{$list.publishtime|date='Y-m-d',###}</span></a></li>
+						 </yhcms:list>
+						</ul>
+					</div>
+					<div class="page">
+						{$page}
+					</div>
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

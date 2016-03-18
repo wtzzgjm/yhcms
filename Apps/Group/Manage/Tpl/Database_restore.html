@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Database/index')}" class="onloading"><em>数据库管理</em></a><span>|</span>
+        <a href="#" class="onloading on"><em>还原管理</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME. '/Database/backup')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th>文件名称</th>
+                    <th width="100px">文件大小</th>
+                    <th width="160px">备份时间</th>
+                    <th width="35px">卷号</th>
+                    <th width="130px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.name}"></td>
+                    <td class="aleft">{$v.name}</td>
+                    <td align="center">{$v.size}</td>
+                    <td align="center">{$v.time|date='Y-m-d H:i:s',###}</td>
+                    <td align="center">{$v.number}</td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Database/restoreData',array('sqlfilepre' => $v['pre']))}">数据恢复</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Database/delSqlFiles',array('sqlfilename' => $v['name']))}')">删除文件</a>      
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Database/delSqlFiles',array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<font class='red'>数据库文件保存目录：Data/resource/backupdata</font>
+                </td>
+                <td colspan="3" align='right'>备份文件数量：{$filenum}，占空间大小：{$total}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

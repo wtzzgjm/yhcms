@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$sitetitle}</title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/{$mobile_css}.css">
+</head>
+<body>
+	<div class="container">
+		<include file="$tpl_Public_add1" />
+		<div class="content-container">
+			<div class="banner">
+				<!-- 本例主要代码 Start ================================ -->
+				<div id="slideBox" class="slideBox">
+
+					<div class="bd">
+						<ul>
+							<yhcms:banner limit="3">
+								<li>
+									<a class="pic" href="javascript:;"><img src="{$banner.litpic}" /></a>
+								</li>
+							</yhcms:banner>
+						</ul>
+					</div>
+
+					<div class="hd">
+						<ul></ul>
+					</div>
+				</div>
+				<!-- 本例主要代码 End ================================ -->
+			</div>
+
+			<div class="search">
+				<input type="text" placeholder="请输入搜索关键字" id="searchBtn">
+				<i class="fa fa-search fa-blue"></i>
+			</div>
+
+			<div class="prolist">
+				<header>
+					<h2>热门产品</h2>
+					<a href="/Mobile/products/"><i class="fa fa-angle-right fa-gray"></i></a>
+				</header>
+
+				<dl class="dllist">
+					<yhcms:prolist typeid="7" limit="4">
+					<dd>
+						<a href="{$prolist.url}"><img src="{$prolist.litpic}" width="100%"></a>
+						<a href="{$prolist.url}">{$prolist.title}</a>
+					</dd>
+					</yhcms:prolist>
+				</dl>
+			</div>
+
+			<div class="artlist">
+				<header>
+					<h2>推荐新闻</h2>
+					<a href="/Mobile/news/"><i class="fa fa-angle-right fa-gray"></i></a>
+				</header>
+
+				<ul class="ullist">
+					<yhcms:artlist typeid="2" limit="4" titlelen="14">
+					<li>
+						<a href="{$artlist.url}">
+							<p>
+								{$artlist.title}
+							</p>
+							<i class="fa fa-angle-right fa-gray"></i>
+						</a>
+					</li>
+					</yhcms:artlist>
+				</ul>
+			</div>
+
+			<include file="$tpl_Public_footer" />
+		</div>
+
+		<include file="$tpl_Public_header" />
+
+		<div class="search-form">
+			<i class="fa fa-angle-left fa-gray" id="searchClose"></i>
+			<div class="search">
+				<form action="<yhcms:searchurl />/" method="post">
+					<input type="text" placeholder="请输入搜索关键字" name="keyword">
+					<i class="fa fa-search fa-blue" id="searchSub"></i>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+	<script type="text/javascript" src="__PUBLIC__/js/common.min.js"></script>
+	<script type="text/javascript">
+		yhcmsApp.rem().windowSize().slidebar().searchBtn().touchSlid();
+	</script>
+</body>
+</html>

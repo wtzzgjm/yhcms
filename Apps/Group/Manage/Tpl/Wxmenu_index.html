@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Wxmenu/index')}" class="onloading on"><em>自定义菜单管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Wxmenu/add')}" class="onloading"><em>添加自定义菜单</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Wxmenu/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="50px">编号</th>
+                    <th width="200px">菜单名称</th>
+                    <th>链接地址</th>
+                    <th width="80px">排序</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td class="aleft">{$v.delimiter}{$v.name}</td>
+                    <td align="center">{$v.url}</td>
+                    <td align="center">
+                        <input type="text" name="{$v.id}" value="{$v.sort}" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="3" size="4"/>
+                    </td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Wxmenu/edit',array('id' => $v['id']))}">编辑</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Wxmenu/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="6">
+                    <a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Wxmenu/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>&nbsp;&nbsp;
+                    <div class="onShow">请选中之后再操作，排序按从小到大排列</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <font style=" color:red;">
+                        注：&nbsp;&nbsp;<a href="__ROOT__/weixinapi.html?type=set_menu" target="_blank" class="onloading"><b>点击生成自定义菜单</b></a><br>
+                        (使用前提是已经拥有了自定义菜单的用户才能够使用，)<br>
+                        第一步:必须先填写微信【AppId】【 AppSecret】！<br>
+                        第二步:添加菜单，<br>
+                        第三步:点击生成!<br>
+                        注意：1级菜单最多只能开启3个，名称不超过4个汉字，2级子菜单最多开启5个，名称不超过8个汉字<br>
+                        官方说明：修改后，需要重新关注，或者最迟隔天才会看到修改后的效果！<br>
+                    </font>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

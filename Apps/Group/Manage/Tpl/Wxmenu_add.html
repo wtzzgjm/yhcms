@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Wxmenu/index')}" class="onloading"><em>自定义菜单管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Wxmenu/add')}" class="onloading on"><em>添加自定义菜单</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Wxmenu/add')}">
+		<div class="form">
+			<dl>
+				<dt>菜单名称：</dt>
+				<dd>
+					<input type="text" name="name" class="inp_one w250" id="name"/> 
+				</dd>
+			</dl>
+			<dl>
+				<dt>菜单链接：</dt>
+				<dd>
+					<input type="text" name="url" class="inp_large w250" id="url" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>上级菜单：</dt>
+				<dd>
+					<select name="pid" class="w256">
+						<option value="0">无</option>
+						<foreach name='nav' item='v'>
+							<option value="{$v.id}" >{$v.delimiter}{$v.name}</option>
+						</foreach>
+					</select>
+				</dd>
+			</dl>
+			<dl>
+	            <dt>排序：</dt>
+				<dd>
+					<input type="text" name="sort" class="inp_one w250" value="1" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="3" size="3"/>
+				</dd>
+	        </dl>
+	        <div class="form_b">		
+				<input type="submit" class="button" id="submit" value="提 交">
+			</div>
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

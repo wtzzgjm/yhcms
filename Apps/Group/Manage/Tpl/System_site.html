@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>基本信息</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/site')}">
+		<div>
+		<dl>
+			<dt> 网站名称：</dt>
+			<dd>
+				<input type="text" name="cfg_webname" class="inp_one inp_w250" value="{$Think.config.cfg_webname}" />
+			</dd>			
+			<dd class="desc">一般填写公司名称</dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 网站主页：</dt>
+			<dd>
+				<input type="text" name="cfg_weburl" class="inp_one inp_w250" value="{$Think.config.cfg_weburl}" />
+			</dd>
+			<dd class="desc" style="width:350px;">例：http://www.baidu.com 后面不带斜杠</dd>
+			<dd></dd>
+		</dl>	
+		
+		<dl>
+			<dt> 模板风格：</dt>
+			<dd>
+				<select name="cfg_themestyle" class="inp_one inp_w250">
+					<foreach name='styleDirList' item='v'>
+					<option value="{$v}" <if condition='$Think.config.cfg_themestyle eq $v'>selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		
+		<dl>
+			<dt> 网站版权信息：</dt>
+			<dd>
+				<textarea name="cfg_powerby" class="tarea_default">{$Think.config.cfg_powerby}</textarea><br/>
+			</dd>
+			<dd class="desc" style="width:350px;">建议代码写到模板里，这里放内容即可，&lt;br /&gt; 换行</dd>
+		</dl>
+		
+		<input type="hidden" name="cfg_cookie_encode" class="inp_one inp_w250" value="{$Think.config.cfg_cookie_encode}" />
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

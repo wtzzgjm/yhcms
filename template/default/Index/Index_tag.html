@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title><yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+</head>
+<body>
+	<div class="sea">
+		<include file="$tpl_Public_header" />
+		<div class="date">
+			<div class="date-link">
+				<div class="blue-point"></div>
+				<span>当前位置:&nbsp;</span>
+				TAG -> {$tag}
+			</div>
+		</div>
+		<div class="sea-main-title">
+			· 产品
+		</div>
+		<div class="sea-pro">
+		  <yhcms:prolist tag="$tag">
+			<div class="pro-l">
+				<a href="{$prolist.areaurl}" class="pic"><img src="{$prolist.litpic}" alt="{$areasname}{$prolist.title}" onload="reset_pic(this, '120,120', true)"></a>
+				<a href="{$prolist.areaurl}">{$areasname}{$prolist.title}</a>
+			</div>
+		  </yhcms:prolist>
+		</div>
+		<div class="sea-main-title">
+			· 新闻
+		</div>
+		<div class="sea-pro">
+		  <div class="new-list line-blue">
+			<ul id="color">
+			 <yhcms:artlist tag="$tag">
+				<li><a href="{$artlist.url}">{$artlist.title}<span>{$artlist.publishtime|date='Y-m-d h:i:s',###}</span></a></li>
+			 </yhcms:artlist>
+			 </if>
+			</ul>
+		</div>
+		</div>
+		<div class="sea-main-title">
+			· 案例
+		</div>
+		<div class="sea-pro">
+		  <yhcms:piclist tag="$tag">
+			<div class="pro-l">
+				<a href="{$piclist.url}" class="pic"><img src="{$piclist.litpic}" alt="{$areasname}{$piclist.title}" onload="reset_pic(this, '120,120', true)"></a>
+				<a href="{$piclist.url}">{$piclist.title}</a>
+			</div>
+		  </yhcms:piclist>
+		</div>
+	</div>
+</body>
+</html>

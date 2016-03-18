@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Guestbook/index')}" class="onloading on"><em>留言本管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Guestbook/add')}" class="onloading"><em>我要留言</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Guestbook/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th></th>
+                    <th>留言</th>
+                    <th>回复</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td>
+                    编号：{$v.id}<br/>
+                    姓名：<if condition="$v['userid']"><a href="{$v.userid}" target="_blank">{$v.username}</a><else/>{$v.username}</if><br/>
+                     来自：{$v.ip}<br/>
+                     电话：{$v.tel}<br/>
+                     QQ：{$v.qq}
+                    </td>
+                    <td>{$v.content}<br/>{$v.posttime|date='Y-m-d H:i:s', ###}</td>
+                    <td class="reply"><if condition="$v['replytime']">{$v.reply}<br/>{$v.replytime|date='Y-m-d H:i:s', ###}</if></td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Guestbook/reply',array('id' => $v['id']))}">回复</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Guestbook/del',array('id' => $v['id']))}')">删除</a>
+                    </td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Guestbook/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                </td>
+                <td colspan="2" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

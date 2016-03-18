@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript">
+$(function () {
+    var postUrl = "{:U(GROUP_NAME.'/Category/pxajax')}";
+    $('.pxajax').focus(function () {
+        $(this).removeClass('noborder');
+    }).blur(function () {
+        $(this).addClass('noborder');
+        var _t = $(this);
+        $.ajax({
+         'type': 'POST',
+         'dataType' :'json',
+         'url': postUrl ,
+         'data': 'val='+_t.attr('value')+'&cid='+_t.attr('name'),
+         success: function (data) {
+                location.reload();
+            } 
+        });
+    });
+});
+</script>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Category/index')}" class="onloading on"><em>栏目设置</em></a><span>|</span><a href="{:U(GROUP_NAME. '/Category/add')}" class="onloading"><em>添加</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="explain-col">
+        <font color="gray">栏目分类是模块内容的归类，可以在不同的栏目中设置附加字段，发布文档时会显示对应栏目的附加字段</font>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Category/sort')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="50px">编号</th>
+                    <th>名称</th>
+                    <th width="100px">所属模型</th>
+                    <th width="40px">显示</th>
+                    <th width="80px">排序</th>
+                    <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <style type="text/css">
+                .noborder {border:none;text-align: center;}
+            </style>
+            <tbody>
+    			<foreach name='cate' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td class="aleft">{$v.delimiter}<if condition="$v['pid'] neq 0">├─</if><a href="<if condition='$v.type eq 0'>{:U(GROUP_NAME. '/'.ucfirst($v['tablename']). '/index', array('pid' => $v['id']))}<else/>{:U(GROUP_NAME.'/Category/edit',array('id' => $v['id']))}</if>">{$v.name}</a></td>
+                    <td align="center"><if condition='$v.type eq 1'><span style="color:red">外部链接</span><else/>{$v.modelname}</if></td>
+                    <td align="center"><if condition="$v['status']">是<else/>否</if></td>
+                    <td align="center"><input type="text" name="{$v.id}" value="{$v.sort}" size="4" class="pxajax noborder"/></td>
+                    <td>
+                        <a href="{:U(GROUP_NAME.'/Category/add', array('pid' => $v['id']))}">添加子栏目</a>
+                        <if condition='$v.type neq 1'>
+                            <a href="{:U(GROUP_NAME.'/'.ucfirst($v['tablename']). '/index', array('pid' => $v['id']))}">列表</a>
+                        </if>
+                        <a href="{:U(GROUP_NAME.'/Category/edit',array('id' => $v['id']))}">修改</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME.'/Category/del', array('id' => $v['id']))}')">删除</a>
+                    </td>
+                </tr>
+                </foreach>
+                <tr>
+                    <td align="center"><input type="checkbox" id="check"></td>
+                    <td colspan="6">
+                        <a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Category/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>&nbsp;&nbsp;
+                        <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Category/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>&nbsp;&nbsp;
+                        <div class="onShow">请选中之后再操作，排序按从小到大排列</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

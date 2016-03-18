@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/bootstrap_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/bootstrap_responsive_min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/sstyle.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/todc_bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/uploadify.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/themes.css" media="all" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/common/css/inside.css" media="all" />
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css" media="all" />
+
+<script type="text/javascript" src="__PUBLIC__/common/js/jQuery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/bootstrap_min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/jquery_validate_min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/jquery_validate_methods.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/jquery_form_min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/jquery_ui_custom.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/jupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/common/js/inside.js"></script>
+
+<script language="javascript" type="text/javascript">
+  //防止客户端缓存文件，造成uploadify.js不更新，而引起的“喔唷，崩溃啦”
+  var timestamp = Math.random();
+  document.write("<script type='text/javascript' "
+  + "src='__PUBLIC__/common/js/jquery_uploadify.js?" + timestamp
+  + "'></s" + "cript>");
+</script>
+
+</head>
+<body>
+
+<div id="main">
+    <div class="container-fluid">
+       	<div class="row-fluid">
+           	<div class="span12">
+           		<form action="?" method="post"> 
+               	<div class="box">
+               		
+                   	<div class="box-title">
+                       	<h3>批量添加产品&nbsp;&nbsp;<small>拖拽图片可排序(图片大小不超过300k,50张上限)</small></h3>
+                       	<a class="btn pull-right" href="Javascript:window.history.go(-1)">返回</a>
+                    </div>
+
+                    <div class="box-cat">
+                    	{$msg}<br>
+                    	所属栏目：
+                       	<select name="cid">
+            							<foreach name='cate' item='v'>
+            								<option value="{$v.id}" <if condition="($pid eq $v['id']) OR ($Think.session.topCate eq $v['id'])">selected="selected"</if>  <if condition="$v['isdown'] eq 1">disabled="disabled"</if>>{$v.delimiter}{$v.name}</option>
+            							</foreach>
+            						</select>
+                    </div>
+
+
+                    <div class="box-content">
+                        
+                           	<div id="upimg_main">
+
+                           	<input id="file_upload" type="file" />
+                           		<ul class="ipost-list ui-sortable" id="fileList"></ul>
+                        		<div id="file_upload_queue" class="uploadifyQueue"></div>
+                        		<script type="text/javascript"> 
+				        		var pid = 1;
+                                $(document).ready(function () {
+                                setTimeout(function(){
+
+                               		initUpload($("#file_upload"), 
+							    50,
+							    {'type_id': 1,'pid':pid},
+							    "{:U(GROUP_NAME. '/Public/uploadify')}",//Product/uploadify
+							    "",//删除图片处理路径
+							    "__PUBLIC__/js/uploadify/uploadify.swf");
+		                           	imgSelectorInit();
+		                            ipostSortInit();
+                              },10);
+		                        });
+                            	</script>
+                        	</div>
+                        	<input type="submit" id="submit" value="上传" class="btn" style="display:none;">
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

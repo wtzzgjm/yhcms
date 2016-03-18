@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+	
+</head>
+<body>
+	<div class="index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>当前位置:&nbsp;</span>
+					<yhcms:position />
+				</div>
+			</div>
+			<div class="main">
+				<div class="main-left">
+					<div class="main-left-center">
+						<div class="title">
+							<div>联系我们</div>
+						</div>
+						<div class="contact">
+							<ul>
+								<yhcms:block name='index_lxfs' />
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="blue-title">
+						<div>在线留言</div>
+					</div>
+					<div class="news">
+						<div class="pronav connav">
+							<span>欢迎用户致电和垂询，我们将竭诚为您提供优质服务。</span>
+						</div>
+						<form class="msg-form" method="post" action="<yhcms:gbookaddurl />/">
+							<table id="tbe">
+								<tbody>
+									<tr>
+										<th>联系人： </th>
+										<td>
+											<input class="click" name="username" type="text" onfocus="if(this.value == '请输入您的姓名'){this.value=''}" onblur="if(this.value=='') {this.value='请输入您的姓名'}" value="请输入您的姓名">
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<th>电话： </th>
+										<td>
+											<input class="click" name="tel" type="text" onfocus="if(this.value == '请输入您的电话'){this.value=''}" onblur="if(this.value=='') {this.value='请输入您的电话'}" value="请输入您的电话">
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<th>Email：</th>
+										<td>
+											<input class="click" name="email" type="text" onfocus="if(this.value == '请输入您的Email'){this.value=''}" onblur="if(this.value=='') {this.value='请输入您的Email'}" value="请输入您的Email">
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<th>QQ：</th>
+										<td>
+											<input class="click" name="qq" type="text" onfocus="if(this.value == '请输入您的qq'){this.value=''}" onblur="if(this.value=='') {this.value='请输入您的qq'}" value="请输入您的qq">
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<th>留言内容：</th>
+										<td>
+											<textarea class="click" name="content" onfocus="if(this.value == '请输入留言内容'){this.value=''}" onblur="if(this.value=='') {this.value='请输入留言内容'}" value="请输入留言内容"></textarea>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<th>验证码：</th>
+										<td>
+											<div>
+												<input class="click" name="vcode" type="text">
+												<img src="<yhcms:vcodeurl />.html" id="VCode">
+												<a href="javascript:void(0)" onclick="javascript:changeVcode(this);">换一张</a>
+											</div>
+										</td>
+									</tr>
+									<script type="text/javascript">
+										function changeVcode(obj){
+											var oVcdoe = document.getElementById('VCode');
+											oVcdoe.src = '<yhcms:vcodeurl />.html'+ '#'+Math.random();
+											return false;
+										}
+									</script>
+									<tr>
+										<th></th>
+										<td>
+											<input class="msg-btn" type="submit" value="发 送">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

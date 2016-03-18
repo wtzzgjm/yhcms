@@ -1,0 +1,18 @@
+<div class="catelist">
+	<header class="cateheader">
+		<i class="fa fa-angle-left fa-light" id="cateBtn"></i>
+		<yhcms:type typeid="$pcate['id']">
+			<a href="{$type.url}"><h1>{$type.name}</h1></a>
+		</yhcms:type>
+	</header>
+	<div class="list">
+	  <yhcms:catlist typeid="$pcate['id']" limit="100">
+		<dl>
+			<dt><a href="{$catlist.url}">{$catlist.name}</a></dt>
+			<volist name='catlist["child"]' id='v'>
+				<dd style="overflow:hidden"><a href="/Mobile/{$v.id|getcaturl}">{$v.name}</a></dd>
+			</volist>
+		</dl>
+	  </yhcms:catlist>
+	</div>
+</div>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$cfg_webname}</title>
+<meta name="keywords" content="{$sitekeywords}" />
+<meta name="description" content="{$sitedescription}" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/re.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript">
+	var Pu = '__PUBLIC__';
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/sliding.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/moveTime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/banner.js"></script>
+<script>
+window.onload = function () {
+	publick();
+	sliding();
+	banner();
+}
+</script>
+</head>
+
+<body>
+<div id="wrap">
+	<div class="box" id="box">
+
+		<div id="ban">
+			<ul class="ban_ul">
+			<yhcms:banner limit='3'>
+				<li class="ban_li"><img src="{$banner.litpic}" width="100%" height="100%"></li>
+			</yhcms:banner>
+			</ul>
+			<div class="clear"></div>
+			<div class="yd">
+				<div id="yd">
+				<div class="active"></div>
+				<div></div>
+				<div></div>
+				</div>
+			</div>
+		</div><!--banner end-->
+
+		<div class="in_main">
+			<div class="phone"><a href="tel:18652827301">18652827301</a></div>
+            
+            <div class="menu" id="menu">
+            	<ul class="menu_ul">
+            	<yhcms:navlist typeid='1' limit="6">
+                	<li class="menu_li" style="border-radius:10px;"><a href='{$navlist.url}' style="width:100%;height:100%;margin:0;"><span style="position:relative;top:15%;margin:0"></span><div style="clear:both;margin-top:15%;">{$navlist.name}</div></a></li>
+               	</yhcms:navlist>
+                </ul>
+            </div>
+		</div><!-- in_main end-->
+		<div class="clear"></div>
+		<include file="$tpl_Public_footer" />
+	</div><!-- box end-->
+</div><!-- wrap end -->
+</body>
+</html>

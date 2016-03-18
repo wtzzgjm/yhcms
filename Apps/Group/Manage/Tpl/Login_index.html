@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录后台</title>
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript">
+var verifyUrl = "{:U(GROUP_NAME.'/Login/verify','','')}";
+var CONTROL_U = "{:U(GROUP_NAME. '/Login/checkusername')}";
+var CONTROL_P = "{:U(GROUP_NAME. '/Login/checkpassword')}";
+var URLPATHDEPR = "{:C('URL_PATHINFO_DEPR')}";
+$(function() {
+	$("#password").focus();
+	top.$('.page-loading').remove();
+}); 
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>	
+</head>
+<body class='login'>
+	<div class="wrapper">
+		<div class="login-body">
+			<h2>YHCMS 后台管理</h2>
+			<form action="{:U(GROUP_NAME.'/Login/login')}" method='post' class='form-validate'>
+				<div class="control-group">
+					<div class="email controls">
+						<input id="username" type="text" name="username" value="admin" placeholder="账号" class='input-block-level' required />
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="pw controls">
+						<input type="password" id="password" name="password" placeholder="密码" class='input-block-level' required />
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="pw controls">
+						<input type="code" class="input-block-level code" name="code" required/> 
+						<img src="{:U(GROUP_NAME. '/Login/verify')}" id="code"/> 
+						<a href="javascript:void(change_code(this));">看不清</a>
+					</div>
+				</div>
+				<div class="submit">
+					<input style="padding: 8px 15px;" type="submit" value="登录" class='btn btn-primary'>
+				</div>
+			</form>
+			<div class="forget" style="margin-top: 20px;">
+				<a href="http://www.yhcms.cn/" target="_blank"><span>官方网站</span></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

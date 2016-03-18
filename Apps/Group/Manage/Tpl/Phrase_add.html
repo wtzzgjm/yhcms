@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorpicker.js"></script>
+<script type="text/javascript">
+$(function () {
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+    });
+	$("#color").colorpicker({
+	    fillcolor:true
+	});
+});
+</script>
+</head>
+<body>
+<div class="main">
+    <div class="pos">添加短语</div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Phrase/add')}">
+		<dl>
+			<dt> 所属栏目：</dt>
+			<dd>
+				<select name="cid">
+					<foreach name='cate' item='v'>
+					<option value="{$v.id}" <if condition="$pid eq $v['id']">selected="selected"</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 自定义属性：</dt>
+			<dd>
+				<foreach name='flagtypelist' item='v'>
+				<label><input type='checkbox' name='flags[]' value='{$key}' <if condition="$key eq B_JUMP">id="CK_JumpUrl"</if> /> {$v}</label>&nbsp; 
+				</foreach>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 标题颜色：</dt>
+			<dd>
+				<input type="text" name="color" id="color" class="inp_small" />
+			</dd>
+		</dl>
+		<dl id="JumpUrlDiv" style="display:none;">
+			<dt> 跳转网址：</dt>
+			<dd>
+				<input type="text" name="jumpurl" class="inp_large" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 关键词：</dt>
+			<dd>
+				<input type="text" name="keywords" class="inp_w250" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 评论：</dt>
+			<dd>
+				<input type="radio" name="commentflag" value="1" checked="checked" />允许 <input type="radio" name="commentflag" value="0" />禁止
+			</dd>
+		</dl>
+		<dl>
+			<dt> 内容：</dt>
+			<dd>
+				<textarea name="content" id="content" style="width:500px; height:100px;"></textarea>
+			</dd>
+		</dl>
+		<div class="form_b">		
+			<input type="hidden" name="pid" value="{$pid}" />
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

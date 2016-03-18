@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}</title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+	<script>
+		window.onload=function()
+		{
+			yh_DisplayWindow ('btn','product-display-1','product-display-2') //产品 列表/橱窗 切换
+			yh_ClassOpen('getul','span','ul') //分类展开
+		}
+	</script>
+</head>
+<body>
+	<div class="index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>当前位置:&nbsp;</span>
+					<yhcms:areaposition />
+				</div>
+			</div>
+			<div class="main">
+				<div class="main-left">
+					<div class="main-left-center">
+						<div class="blue-title line-blue">
+							<div>{$areasname}{$pcate.name}</div>
+						</div>
+						<div class="index-article new-article">
+							<ul id="getul">
+							  <yhcms:catlist typeid="7" limit="4">
+								<li><a href="{$catlist.areaurl}"><span>{$areasname}{$catlist.name}</span></a></li>
+								<ul class="open">
+								  <volist name='catlist["child"]' id='v'>
+									<li><a href="{$v.id|getcaturl}">{$areasname}{$v.name}</a></li>
+								  </volist>
+								</ul>
+							  </yhcms:catlist>
+							</ul>
+						</div>
+						<div class="title">
+							<div>联系我们</div>
+						</div>
+						<div class="contact">
+							<ul>
+								<yhcms:block name='index_lxfs' />
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="blue-title">
+						<div>{$areasname}{$cate.name}</div>
+					</div>
+					<div class="news">
+						<div id="btn" class="pronav">
+							<a href="javascript:;">用列表方式展示</a>
+							<a href="javascript:;">用橱窗方式展示</a>
+						</div>
+					</div>
+					<div id="product-display-1">
+						<yhcms:list typeid="$cid" pagesize="2">
+						<div class="pro">
+							<div class="pro-l">
+								<a href="{$list.areaurl}" class="pic"><img src="{$list.litpic}" alt="{$areasname}{$list.title}" width="100%" onload="reset_pic(this, '130,120', true)"></a>
+								<!-- <a href="{$list.areaurl}">{$areasname}{$list.title}</a> -->
+							</div>
+							<div class="pro-r">
+								<div>产品名称：<h2>{$areasname}{$list.title}</h2></div>
+								<div>产品规格：<span>{$list.specification}</span></div>
+								<div>产品简介：<span>{$list.description|str2sub=80, true}</span></div>
+							</div>
+						</div>
+						</yhcms:list>
+					</div>
+					<div id="product-display-2"  style="display:none;">
+						<div class="pro pro-2">
+							<yhcms:list typeid="$cid" pagesize="2">
+							<div class="pro-l">
+								<a href="{$list.areaurl}" class="pic"><img src="{$list.litpic}" alt="{$areasname}{$list.title}" onload="reset_pic(this, '120,120', true)"></a>
+								<a href="{$list.areaurl}">{$areasname}{$list.title}</a>
+							</div>
+							</yhcms:list>
+						</div>
+					</div>
+
+					<div class="page">
+						{$page}
+					</div>
+				
+				<div class="area">
+					<div class="area-title">
+						<div class="blue-title">
+							<div>地区产品</div>
+							<span><a href="<yhcms:cfg_weburl />/diqu.html">更多>></a></span>
+						</div>
+					</div>
+					<div class="area-links">
+						<foreach name='arealist' item='v'>
+							<a href="<yhcms:siteurl />/diqu_{$v.ename}/{$cate.ename}/">{$v.sname}{$cate.name}</a>
+						</foreach>
+					</div>
+				</div>
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

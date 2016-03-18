@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/System/keyword')}" class="onloading on"><em>更新关键词</em></a>
+    </div>
+    <div class="bk10"></div>
+    <if condition="$text eq ''">
+    	<div class="content-menu ib-a blue line-x">
+			<a href="{:U(GROUP_NAME. '/System/keyword', array('type' => 1))}" class="selbtn">
+				<em>模式一生成</em>
+			</a><span>产品栏目名称-企业名称</span><br>
+			<a href="{:U(GROUP_NAME. '/System/keyword', array('type' => 2))}" class="selbtn">
+				<em>模式二生成</em>
+			</a><span>产品栏目名称+长尾关键词1,产品栏目名称+长尾关键词2,产品栏目名称+长尾关键词3...-企业名称</span><br>
+			<a href="{:U(GROUP_NAME. '/System/keyword', array('type' => 3))}" class="selbtn">
+				<em>模式三生成</em>
+			</a><span>产品栏目名称(长尾关键词1,长尾关键词2,长尾关键词3，长尾关键词4)-企业名称</span><br>
+			<a href="{:U(GROUP_NAME. '/System/keyword', array('type' => 4))}" class="selbtn">
+				<em>模式四生成</em>
+			</a><span>城市+产品栏目名称+长尾关键词1,城市+产品栏目名称+长尾关键词2,城市+产品栏目名称+长尾关键词3...-企业名称</span><br>
+			<a href="{:U(GROUP_NAME. '/System/keyword', array('type' => 5))}" class="selbtn">
+				<em>模式五生成</em>
+			</a><span>城市+产品栏目名称(长尾关键词1,长尾关键词2,长尾关键词3，长尾关键词4)-企业名称</span><br>
+		</div>
+    <else/>
+    	<div>{$text}<br><a href="{:U(GROUP_NAME. '/System/clearCache')}">请及时更新缓存</a></div>
+    </if>
+</div>
+<style>
+.selbtn{width:100px; height:40px; line-height: 40px; text-align: center; background-color: #368ee0; margin-bottom: 10px;}
+.selbtn em{ color: #fff;}
+.line-x span{color: #000;}
+</style>
+</body>
+</html>

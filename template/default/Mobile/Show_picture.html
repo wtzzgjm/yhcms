@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$sitekeywords}" />
+	<meta name="description" content="{$sitedescription}" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/{$mobile_css}.css">
+</head>
+<body>
+	<div class="container">
+
+		<include file="$tpl_Public_add1" />
+		<div class="content-container">
+			<if condition="$content['litpic']">
+				<div class="banner">
+			
+					<img src="{$content.litpic}" width="100%">
+				</div>
+			</if>
+
+			<div class="show_pro">
+				<ul>
+					<li class="active">产品详情</li>
+					<li>产品参数</li>
+				</ul>
+
+				<ul>
+					<li>
+						<div class="cont">
+							{$content.content}
+						</div>
+					</li>
+					<li>
+						<dl>
+							<dd>产品品牌: <span>{$content.brand}</span></dd>
+							<dd>产品单位: <span>{$content.units}</span></dd>
+							<dd>产品规格: <span>{$content.specification}</span></dd>
+							<dd>产品价格: <span>{$content.price}</span></dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+
+			<include file="$tpl_Public_footer" />
+		</div>
+		
+		<include file="$tpl_Public_header" />
+
+	</div>
+
+
+	<script type="text/javascript" src="__PUBLIC__/js/common.min.js"></script>
+	<script type="text/javascript">
+		yhcmsApp.rem().windowSize().slidebar().tab();
+	</script>
+</body>
+</html>

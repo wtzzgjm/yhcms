@@ -1,0 +1,1 @@
+<?php	return array ( 'cfg_webtitle' => '[dq]网站建设,[dq]网站营销,[dq]网络推广-远航CMS官方演示地址', 'cfg_keywords' => '[dq]网站建设,[dq]网站营销,[dq]网络推广', 'cfg_description' => '远航CMS官方演示地址', 'cfg_site_hxkey' => '混合器,过滤器', 'cfg_site_cwkey' => '厂,价格,专卖,规格,中心,公司,订购,十大品牌,哪家好,维修,检测', 'cfg_site_area' => 3, );?>

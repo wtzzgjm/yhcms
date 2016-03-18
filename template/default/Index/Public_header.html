@@ -1,0 +1,30 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.SuperSlide.2.1.1.source.js"></script>
+<div class="head">
+	<div class="logo">
+		<a href="<yhcms:cfg_weburl />"><img src="__PUBLIC__/images/logo.png" width="245"></a>
+	</div>
+	<div class="head-link">
+		<a href="<yhcms:cfg_weburl />">返回首页</a>
+		<a href="<yhcms:cfg_weburl />/contact/">联系我们</a>
+		<a href="<yhcms:cfg_weburl />/sitemap.html">网站地图</a>
+		<a href="<yhcms:cfg_weburl />/sitemap.xml">XML地图</a>
+	</div>
+</div>
+<div class="banBox">
+	<div class="bannar">
+		<yhcms:banner limit='4'>
+			<li><a target="_blank" href="{$banner.url}"><img src="{$banner.litpic}"></a></li>
+		</yhcms:banner>
+	</div>
+</div>
+<script type="text/javascript">
+	jQuery(".banBox").slide({ mainCell:".bannar",effect:"fold", autoPlay:true, delayTime:600, trigger:"click"});
+</script>
+<div class="nav">
+	<ul>
+		<yhcms:navlist limit="100">
+			<li><a href="{$navlist.url}">{$navlist.name}</a></li>
+		</yhcms:navlist>
+	</ul>
+</div>

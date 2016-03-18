@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME.'/Order/index')}" class="onloading on"><em>在线订购设置</em></a> |
+        <a href="{:U(GROUP_NAME.'/Order/show')}" class="onloading"><em>查看订单</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/Order/index')}">
+		<div>
+		<dl>
+		  <if condition="$order_mail_sms eq 1">
+		  	<input type="radio" name="is_sms_" value="2" style="margin-left:118px;" /> 发送到邮箱&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="is_sms_" value="1" checked /> 不发送到邮箱	
+		  <else />
+		  	<input type="radio" name="is_sms_" value="2" style="margin-left:118px;" checked/> 发送到邮箱
+			<input type="radio" name="is_sms_" value="1" /> 不发送到邮箱
+		  </if>
+		</dl>
+		<dl>
+			<dt> 发送邮箱账号：</dt>
+			<dd>
+				<input type="text" name="order_email_acc" class="inp_one inp_w250" value="{$order_mail_acc}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 发送邮箱密码：</dt>
+			<dd>
+				<input type="text" name="order_email_psw" class="inp_one inp_w250" value="{$order_mail_psw}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt>发送邮箱SMTP服务器：</dt>
+			<dd>
+				<input type="text" name="order_email_smtp" class="inp_one inp_w250" value="{$order_mail_smtp}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 接收邮箱地址：</dt>
+			<dd>
+				<input type="text" name="order_email_adds" class="inp_one inp_w250" value="{$order_mail_adds}" />
+			</dd>			
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorpicker.js"></script>
+<script>
+$(function(){
+    $("select[id='selpid']").change(function(){
+		$("select[id='selpid'] option").each(function(i,o){
+			if($(this).attr("selected")){
+				if($(this).val() == 0){
+					$("#url").val("");
+					$("#url").removeAttr("readonly");
+				} else{
+					$("#url").val("@"+$(this).val());
+					$("#url").attr("readonly", "readonly");
+				}	
+			}
+		});
+	});
+
+	$("input[name='navtype']").change(function(){
+		$("input[name='navtype']").each(function(i,o){
+			$("#navsel"+$(this).val()).hide();
+			if($(this).attr("checked")){
+				$("#navsel"+$(this).val()).show();
+			}
+		});
+	});
+
+	$("#icocolor").colorpicker({
+	    fillcolor:true
+	});
+	$("#fontcolor").colorpicker({
+	    fillcolor:true
+	});
+});
+</script>
+<style>
+.icolist{ width: 400px;}
+.icolist li{ float: left; width: 40px; margin-right: 20px;}
+.icolist li a{margin-left: 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Navwap/index')}" class="onloading"><em>菜单管理</em></a><span>|</span>
+        <a href="" class="onloading on"><em>编辑菜单</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Navwap/edit')}">
+		<div class="form">
+			<div class="title-info">菜单信息</div>
+			<dl>
+				<dt>菜单名称：</dt>
+				<dd>
+					<input type="text" name="name" class="inp_one" id="name" value="{$vo.name}"/> 
+				</dd>
+			</dl>
+			<dl>
+	            <dt>排序：</dt>
+				<dd>
+					<input type="text" name="sort" class="inp_one" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="3" size="3" value="{$vo.sort}"/>
+				</dd>
+	        </dl>
+	        <div class="title-info">风格设置</div>
+			<dl>
+				<dt> 图标颜色：</dt>
+				<dd>
+					<input type="text" name="icocolor" id="icocolor" class="inp_small" value="{$vo.icocolor}" style="color:{$vo.icocolor};"/>
+				</dd>
+			</dl>	
+			<dl>
+				<dt> 文字颜色：</dt>
+				<dd>
+					<input type="text" name="fontcolor" id="fontcolor" class="inp_small" value="{$vo.fontcolor}" style="color:{$vo.fontcolor};"/>
+				</dd>
+			</dl>	
+			<div class="title-info">菜单点击效果</div>
+			<dl>
+				<dt>菜单类型：</dt>
+				<dd>
+					<input type="radio" value="1" name="navtype" <if condition="$vo.navtype eq '1'">checked</if>>&nbsp;&nbsp;拨打电话&nbsp;&nbsp;
+					<input type="radio" value="2" name="navtype" <if condition="$vo.navtype eq '2'">checked</if>>&nbsp;&nbsp;QQ客服&nbsp;&nbsp;
+					<input type="radio" value="3" name="navtype" <if condition="$vo.navtype eq '3'">checked</if>>&nbsp;&nbsp;地图位置&nbsp;&nbsp;
+					<input type="radio" value="4" name="navtype" <if condition="$vo.navtype eq '4'">checked</if>>&nbsp;&nbsp;首页链接&nbsp;&nbsp;
+					<input type="radio" value="5" name="navtype" <if condition="$vo.navtype eq '5'">checked</if>>&nbsp;&nbsp;栏目链接&nbsp;&nbsp;
+				</dd>
+			</dl>
+
+			<div id="navsel1" name="navtype_dl" <if condition="$vo.navtype neq '1'">style="display:none;"</if>>
+				<dl>
+					<dt>电话号码：</dt>
+					<dd>
+						<input type="text" name="tel" class="inp_large" <if condition="$vo.navtype eq '1'">value="{$vo.url}"</if>/>
+					</dd>
+				</dl>
+			</div>
+
+			<div id="navsel2" name="navtype_dl" <if condition="$vo.navtype neq '2'">style="display:none;"</if>>
+				<dl>
+					<dt>QQ：</dt>
+					<dd>
+						<input type="text" name="qq" class="inp_large" <if condition="$vo.navtype eq '2'">value="{$vo.url}"</if>/>
+					</dd>
+				</dl>
+			</div>
+
+			<div id="navsel3" name="navtype_dl" <if condition="$vo.navtype neq '3'">style="display:none;"</if>>
+				<!--地图start-->
+				<dl>
+					<dt>地图URL：</dt>
+					<dd>
+						<input type="text" name="mapurl" class="inp_large" <if condition="$vo.navtype eq '3'">value="{$vo.url}"</if>/>
+					</dd>
+				</dl>
+				<!--地图end-->
+			</div>
+
+			<div id="navsel4" name="navtype_dl" <if condition="$vo.navtype neq '4'">style="display:none;"</if>>
+				<!--首页-->
+			</div>
+
+			<div id="navsel5" name="navtype_dl" <if condition="$vo.navtype neq '5'">style="display:none;"</if>>
+				<dl>
+					<dt>栏目链接：</dt>
+					<dd>
+						<select id="selpid">
+							<foreach name='cate' item='v'>
+							<option value="{$v.id}" <if condition="$vo.url eq '@'.$v['id']">selected</if> >{$v.delimiter}{$v.name}</option>
+							</foreach>
+						</select>
+						<input type="hidden" name="url" class="inp_large" id="url" value="{$vo.url}"/>
+					</dd>
+				</dl>
+				<dl>
+					<dt>菜单图标：</dt>
+					<dd>
+						<ul class="icolist">
+							<foreach name='icolist' item='v'>
+							<li><input type="radio" name="ico" value="{$v}" <if condition="$vo.ico eq $v">checked</if>><a class="fa {$v}"></a></li>
+							</foreach>
+						</ul>
+					</dd>
+				</dl>
+	
+			</div>
+			
+	        <div class="form_b">	
+				<input type="hidden" name="id" value="{$vo.id}" />	
+				<input type="submit" class="button" id="submit" value="提 交">
+			</div>
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

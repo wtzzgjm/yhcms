@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorpicker.js"></script>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;   
+		window.UEDITOR_CONFIG.imagePath = "" ;
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;
+		window.UEDITOR_CONFIG.imageManagerPath = "";
+		UE.getEditor('content');
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/i18n/jquery.jBox-zh-CN.js"></script>
+<link type="text/css" rel="stylesheet" href="__DATA__/static/jq_plugins/jBox/Skins2/blue/jbox.css"/>
+<script type="text/javascript">
+$(function () {
+	//缩略图上传
+	var litpic_tip = $(".litpic_tip");
+	var btn = $(".litpic_btn span");
+	$("#fileupload").wrap("<form id='myupload' action='{:U(GROUP_NAME. '/Public/upload', array('tb' => 2))}' method='post' enctype='multipart/form-data'></form>");
+    $("#fileupload").change(function(){
+    	if($("#fileupload").val() == "") return;
+		$("#myupload").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+        		$('#litpic_show').empty();
+				btn.html("上传中...");
+    		},
+			success: function(data) {
+				//litpic_tip.html("<b>"+data.title+"("+data.size+"k)</b> <span class='delimg' rel='"+data.url+"'>删除</span>");
+				if(data.state == 'SUCCESS'){					
+					litpic_tip.html(""+ data.title +" 上传成功("+data.size+"k)");
+					var img = data.url;//原图
+					var timg = data.turl;//缩略图
+					$('#litpic_show').html("<img src='"+timg+"' width='120'>");
+					$("#litpic").val(timg);
+				}else {
+					litpic_tip.html(data.state);		
+				}			
+					btn.html("添加缩略图");
+
+			},
+			error:function(xhr){
+				btn.html("上传失败");
+				litpic_tip.html(xhr);
+			}
+		});
+	});
+	
+});
+
+$(function () {
+
+	$('#BrowerPicture').click(function(){
+		$.jBox("iframe:{:U(GROUP_NAME.'/Public/browseFile', array('stype' => 'picture'))}",{
+			title:'YHCMS',
+			width: 650,
+   			height: 350,
+    		buttons: { '关闭': true }
+   			}
+		);
+	});
+	$("#color").colorpicker({
+	    fillcolor:true
+	});
+
+	$url = "{:U(GROUP_NAME. '/Category/getmessage')}";
+	getmessage();
+});
+
+function selectPicture(sfile) {
+	$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+	$("#litpic").val(sfile);
+	$.jBox.tip("选择文件成功");
+	$.jBox.close(true);
+}
+
+function getmessage(){
+	$cid = $("#cid").val();
+	$.ajax({type: "POST",dataType:"json", url: $url, data: {cid:$cid}, 
+		success: function(data) {
+			$("#showmessage").html(data.info);
+		}
+	});
+}
+
+</script>
+
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>WAP 设置</em></a>
+    </div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/mobile')}">
+		<div>
+		<dl>
+			<dt>自动跳转：</dt>
+			<dd>
+				<input type="radio" name="cfg_mobile_auto" value="1" <if condition="C('cfg_mobile_auto') eq 1">checked="checked"</if>>开启 
+				<input type="radio" name="cfg_mobile_auto" value="0" <if condition="C('cfg_mobile_auto') eq 0">checked="checked"</if>>关闭
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 页面LOGO：</dt>
+			<dd>
+				<div class="litpic_show">
+				    <div style="float:left;">
+				    <input type="text" class="inp_w250" name="cfg_mobile_logo" id="litpic"  value="{$Think.config.cfg_mobile_logo}" />
+				    <input type="button" class="button" id="BrowerPicture" value="选择站内图片">
+				    </div>
+						<div class="litpic_btn">
+				        <span>添加缩略图</span>
+				        <input id="fileupload" type="file" name="mypic">
+				    </div>
+				    <div class="litpic_tip"></div>
+				    <div id="litpic_show"> </div>
+				</div>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 模板颜色：</dt>
+			<dd class="pcolor">
+				<foreach name='colorshow' item='v'>
+					<div class="c_{$v.color}" <if condition="$v['show'] eq '0'">style="display:none;"</if>><i class="fa fa-check"></i></div>
+				</foreach>
+
+				<input type="hidden" name="cfg_mobile_pcolor" value="{$Think.config.cfg_mobile_pcolor}" />
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>	
+		<script type="text/javascript">
+			$('.pcolor').find('i').eq("{$Think.config.cfg_mobile_pcolor}").show();
+			$('.pcolor').find('div').click(function(){
+				$('.pcolor').find('input').val($(this).index());
+				$('.pcolor').find('i').hide();
+				$(this).children('i').show();
+			});
+		</script>
+		<dl>
+			<dt> 底部版权：</dt>
+			<dd>
+				<textarea name="cfg_mobile_powerby" class="tarea_default">{$Think.config.cfg_mobile_powerby}</textarea><br/>
+				
+			</dd>
+		</dl>
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+
+</body>
+</html>

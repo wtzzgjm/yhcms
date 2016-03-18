@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Model/index')}" class="onloading on"><em>模型列表</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Model/add')}" class="onloading"><em>添加内容模型</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Model/sort')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>名称</th>
+                    <th width="100px">附加表</th>
+                    <th width="100px">启用</th>
+                    <th width="80px">排序</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td>{$v.name}</td>
+                    <td align="center">{$v.tablename}</td>
+    				<td align="center"><if condition="$v['status']">是<else/>否</if></td>
+                    <td align="center"><input type="text" name="{$v.id}" size="4" value="{$v.sort}" /></td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME.'/Model/edit', array('id' => $v['id']))}">修改</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Model/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="6">
+                    <a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Model/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>&nbsp;
+                    <div class="onShow">请选中之后再操作，排序按从小到大排列</div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

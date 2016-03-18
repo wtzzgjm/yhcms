@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Banner/index')}" class="onloading on"><em>幻灯片管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Banner/add')}" class="onloading"><em>添加幻灯片</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Banner/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th width="100px">幻灯片名称</th>
+                    <th>幻灯图片</th>
+                    <th width="250px">连接地址</th>
+                    <th width="80px">排序</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td>{$v.name}</td>
+                    <td align="center"><img src="{$v.litpic}" style="height:70px;"/></td>
+                    <td align="center">{$v.url}</td>
+                    <td align="center">
+                        <input type="text" name="{$v.id}" value="{$v.sort}" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="3" size="4"/>
+                    </td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Banner/edit',array('id' => $v['id']))}">编辑</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Banner/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="4">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Banner/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>&nbsp;&nbsp;<a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Banner/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>&nbsp;&nbsp;
+                        <div class="onShow">请选中之后再操作，排序按从小到大排列</div>
+                </td>
+                <td colspan="2" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

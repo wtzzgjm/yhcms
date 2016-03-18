@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>全国分站-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/city.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+</head>
+<body>
+	<div class="index-bg city-index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>当前位置:&nbsp;</span>
+					<yhcms:position />
+				</div>
+			</div>
+			<div class="city-main">
+				<div class="hot">
+					<ul>
+					 <foreach name='rmlist' item='v'>
+						<li><a href="<yhcms:siteurl />/diqu_{$v.ename}">{$v.sname}</a></li>
+					 </foreach>
+					</ul>
+				</div>
+				<div class="city_list">
+					<foreach name='zmlist' item='v'>
+					<div class="city-class">
+						<span>{$v.name}</span>
+						<div>
+						<foreach name='v["vv"]' item='dv'>
+							<a href="<yhcms:siteurl />/diqu_{$dv.ename}">{$dv.sname}</a>
+						</foreach>
+						</div>
+					</div>
+					</foreach>
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

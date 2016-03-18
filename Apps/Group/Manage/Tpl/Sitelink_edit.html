@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Sitelink/index')}" class="onloading"><em>关键词内链管理</em></a><span>|</span>
+        <a href="" class="onloading on"><em>编辑关键词</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Sitelink/edit')}">
+		<div class="form">
+			<dl>
+				<dt>关键词名称：</dt>
+				<dd>
+					<input type="text" name="name" value="{$vo.name}" class="inp_large" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>连接地址：</dt>
+				<dd>
+					<input type="text" name="url" value="{$vo.url}" class="inp_large" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>替换个数：</dt>
+				<dd>
+					<input type="text" name="num" class="inp_small w220" value="{$vo.num}" />
+				</dd>
+			</dl>
+			<dl>
+	            <dt>打开方式：</dt>
+	            <dd>
+	                <select name="otype" class="w226">
+						<option value="_blank">新开窗口</option>
+						<option value="" <if condition="$vo['otype'] eq ''">selected</if>>当前窗口</option>
+					</select>
+	            </dd>
+	        </dl>
+	        <dl>
+	            <dt>是否启用：</dt>
+	            <dd>
+	                <input type="radio" name="isok" value="1" <if condition="$vo['isok'] eq '1'">checked</if>>&nbsp;&nbsp;启用&nbsp;&nbsp;
+	                <input type="radio" name="isok" value="0" <if condition="$vo['isok'] eq '0'">checked</if>>&nbsp;&nbsp;禁用&nbsp;&nbsp;
+	            </dd>
+	        </dl>
+	        <div class="form_b">	
+				<input type="hidden" name="id" value="{$vo.id}" />	
+				<input type="submit" class="button" id="submit" value="提 交">
+			</div>
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

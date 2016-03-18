@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$sitetitle}</title>
+	<meta name="keywords" content="{$sitekeywords}" />
+	<meta name="description" content="<yhcms:cfg_description />" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.SuperSlide.2.1.1.source.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+	<script type="text/javascript">
+	window.onload=function()
+	{
+		yh_tab ('tab','tab-b')
+	};
+	</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+	<div class="index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<!-- <div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>当前位置:&nbsp;</span>
+					<yhcms:position />
+				</div>
+			</div> -->
+			<div class="main index-main">
+				<div class="main-left">
+					<div class="main-left-center">
+						<div class="search">
+							<span>站内搜索:</span>
+							<form action="<yhcms:searchurl />/" method="post">
+								<input type="text" value="--请输入关键字--" onFocus="if(this.value == '--请输入关键字--'){this.value=''}" onBlur="if(this.value ==''){this.value='--请输入关键字--'}" name="keyword" />
+								<input class="search-button" type="submit" value="搜 索" />
+							</form>
+						</div>
+					<yhcms:type typeid="2">
+						<div class="title">
+							<div>{$type.name}</div>
+							<a class="title-more" href="{$type.url}">更多>></a>
+						</div>
+					</yhcms:type>
+						<div class="index-article">
+							<ul>
+							<yhcms:artlist typeid="2" limit="6" titlelen="20">
+								<li><a href="{$artlist.url}">{$artlist.title}</a></li>
+							</yhcms:artlist>
+							</ul>
+						</div>
+						<div class="title">
+							<div>联系我们</div>
+						</div>
+						<div class="contact">
+							<ul>
+								<yhcms:block name='index_lxfs' />
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="blue-title">
+						<div>热门产品</div>
+					</div>
+					<div class="product-display frame">
+						<div class="bd">
+							<ul>
+							<yhcms:prolist typeid="7" limit="12">
+								<li>
+									<a href="{$prolist.areaurl}" class="pic"><img src="{$prolist.litpic}" alt="{$areasname}{$prolist.title}" width="100%" onload="reset_pic(this, '120,120')"></a>
+									<span><a href="{$prolist.areaurl}">{$areasname}{$prolist.title}</a></span>
+								</li>
+							</yhcms:prolist>
+							</ul>
+						</div>
+					</div>
+					<script id="jsID" type="text/javascript">
+					 var ary = location.href.split("&");
+					jQuery(".product-display").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:5,interTime:50,});
+					</script>
+				<yhcms:type typeid="1">
+					<div class="blue-title line-blue">
+						<div>{$type.name}</div>
+						<a class="title-more" href="{$type.url}">更多>></a>
+					</div>
+					<div class="company">
+						<img src="{$type.litpic}" alt="{$type.name}" width="170">
+						<div>{$type.description|str2sub=200, true}</div>
+					</div>
+				</yhcms:type>
+					<div class="blue-title line-blue">
+						<div>产品中心</div>
+						<ul class="product-tab"  id="tab">
+						  <yhcms:catlist typeid="7" limit="5">
+							<li><a href="{$catlist.areaurl}"><span>{$areasname}{$catlist.name}</span></a></li>
+						  </yhcms:catlist>
+						</ul>
+					</div>
+					<div id="tab-b" class="product-display-2">
+					  <yhcms:catlist typeid="7" limit="5">
+						<ul>
+						 <yhcms:prolist typeid="$catlist['id']" limit="4">
+							<li>
+								<a href="{$prolist.areaurl}" class="pic"><img src="{$prolist.litpic}" alt="{$areasname}{$prolist.title}" width="100%" onload="reset_pic(this, '120,120')"></a>
+								<span><a href="{$prolist.areaurl}">{$areasname}{$prolist.title}</a></span>
+							</li>
+						 </yhcms:prolist>
+						</ul>
+					  </yhcms:catlist>
+					</div>
+				</div>
+			</div>
+
+			<div class="links">
+				<div class="blue-title">
+					<div>友情链接</div>
+				</div>
+				<yhcms:flink limit='10'>
+					<a href="{$flink.url}" target="_blank">{$flink.name}</a>
+				</yhcms:flink>
+			</div>
+			<div class="linkscon">
+				<div class="blue-title">
+					<div>全国分站</div>
+					<a href="/diqu.html" class="pull-right diquaction">更多分站 >></a>
+				</div>
+				<yhcms:arealist limit='50'>
+		            <li style="float:left;"><a href='{$arealist.url}'>{$arealist.name}</a>&nbsp;&nbsp;</li>
+		        </yhcms:arealist>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

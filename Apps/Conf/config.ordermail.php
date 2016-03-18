@@ -1,0 +1,1 @@
+<?php	return array ( 'is_sms_' => '1', 'order_email_acc' => '583843162@qq.com', 'order_email_psw' => 'yh3517022', 'order_email_smtp' => 'smtp.qq.com', 'order_email_adds' => 'yinhuang@yhcompany.cn', );?>

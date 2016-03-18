@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$sitekeywords}" />
+	<meta name="description" content="{$sitedescription}" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/{$mobile_css}.css">
+</head>
+<body>
+		<include file="$tpl_Public_add1" />
+
+		<div class="content-container">
+			<div class="pagecont">
+				<header>
+					<h2>{$cate.name}</h2>
+					<a href="javascript:;" id="catBtn-s">更多栏目<i class="fa fa-angle-right fa-gray"></i></a>
+				</header>
+				<div class="cont">
+					{$cate.content}
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+
+
+		<include file="$tpl_Public_header" />
+
+		<include file="$tpl_Public_add2" />
+
+	</div>
+
+
+	<script type="text/javascript" src="__PUBLIC__/js/common.min.js"></script>
+	<script type="text/javascript">
+		yhcmsApp.rem().windowSize().slidebar().cateBar();
+	</script>
+</body>
+</html>

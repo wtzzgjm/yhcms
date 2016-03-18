@@ -1,0 +1,17 @@
+<div id="wrap">
+	<div class="boxartlist" id="box">
+		<div class="btit" id="btit">
+			<span>{$cate.name}</span>
+			<div id="classMenu">
+				<ul class="cMul">
+					<li><a href="{:U('Index/index')}/">网站首页</a></li>
+					<yhcms:navlist typeid='1' limit="10">
+						<li><a href="{$navlist.url}">{$navlist.name}</a></li>
+               		</yhcms:navlist>
+				</ul>
+			</div>
+		</div><!--  btit end  -->
+		<div class="stit" id='stit'>
+			<span>{$cate.name}</span>
+			<span id="classclass">更多分类</span>
+		</div><!-- stit end -->

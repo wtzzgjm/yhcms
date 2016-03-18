@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="__PUBLIC__/css/index.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/css/table_form.css" />
+<script language="JavaScript">
+<!--
+var URL = '__URL__';
+var APP	 = '__APP__';
+var SELF='__SELF__';
+var PUBLIC='__PUBLIC__';
+//-->
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/zh-cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/artDialog/jquery.artDialog.js?skin=default"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/admin.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/dayrui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	linktype();
+	$("input[name='type']").click(function(){
+		$("#ename").val('');
+		linktype();
+	});
+
+	function linktype(){
+		var lltt = $("input[name='type']");
+        	//var inputs = $(this).parents('dl').find('dt');
+        	var dl = lltt.parents('dl').next();
+        	var nextdls = $("#nextdl").nextAll();
+
+        	if(lltt.attr('checked')) {
+        		dl.find('dt').html('链接地址：');
+        		dl.find('span').hide();
+                //var inputParent = $(this).parents('.app').find('p>input');    
+                nextdls.hide();
+
+            }else {
+            	dl.find('dt').html('别名(拼音)：');
+            	dl.find('span').show();
+            	nextdls.show();
+            }
+        }
+
+
+		//获取系统关键词列表
+		$("#get_keywords").click(function(){
+			$.ajax({type: "POST",dataType:"json", url: "__ROOT__/Manage/Index/get_keywords.html", data: {title:$("#title").val()}, // 将表单数据ajax提交验证
+				success: function(data) {
+					$("#keywords").val(data.info);
+					$("#seotitle").val(data.info);
+				}
+			});
+			//$("#keywords").val($(this).attr('rel'));
+		});
+		$("select[name='modelid']").change(function(){
+			modelidsel();
+		});
+		top.$('.page-loading').remove();
+		
+
+	});
+function get_cate(){}
+function modelidsel(){
+	$("select[name='modelid'] option").each(function(i,o){
+		if($(this).attr("selected")){
+			var styleid = $(this).val();
+			setStyleSelect(styleid);
+
+			if (styleid != 3) {
+				$("#get_keywords").hide();
+			}else{
+				$("#get_keywords").show();
+			};
+
+		}
+	});
+}
+function setStyleSelect(id){
+	var template_list = $("select[name='template_list']");
+	var template_show = $("select[name='template_show']");
+	switch (id){
+		<foreach name='mlist' key='key' item='v'>				
+		case '{$v.id}':
+		template_list.val("{$v.template_list}");
+		template_show.val("{$v.template_show}");
+		break;				 	
+		</foreach>
+	}
+}
+</script>

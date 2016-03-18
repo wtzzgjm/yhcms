@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <if condition='ACTION_NAME eq "index"'>
+        <div class="content-menu ib-a blue line-x">
+            <a href="{:U(GROUP_NAME. '/Special/index')}" class="onloading on"><em>专题管理</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Special/add')}" class="onloading"><em>添加专题</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME.'/Special/trach')}" class="onloading"><em>回收站</em></a>
+        </div>
+    <else/>
+        <div class="content-menu ib-a blue line-x">
+            <a href="{:U(GROUP_NAME. '/Special/index')}" class="onloading"><em>专题管理</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME. '/Special/add')}" class="onloading"><em>添加专题</em></a><span>|</span>
+            <a href="{:U(GROUP_NAME.'/Special/trach')}" class="onloading on"><em>回收站</em></a>
+        </div>
+    </if>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Special/del')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="50px">编号</th>
+                    <th>标题</th>
+                    <th width="100px">分类</th>
+                    <th width="35px">点击</th>
+                    <th width="150px">更新时间</th>
+                    <th width="100px">操作</th>
+                </tr>
+            </head>
+            <tbody>
+			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align='center'><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align='center'>{$v.id}</td>
+                    <td class="aleft" style="color:{$v.color}">{$v.title}<if condition="$v.flag gt 0"><span style="color:#079B04;">[{$v.flag|flag2Str}]</span></if></td>
+                    <td align='center'>{$v.catename}</td>
+                    <td align='center'>{$v.click}</td>
+                    <td align='center'>{$v.updatetime|date='Y-m-d H:i:s', ###}</td>
+                    <td align='center'>
+                        <if condition='ACTION_NAME eq "index"'>
+                            <if condition="($v.flag & B_JUMP) && !empty($v['jumpurl']) ">
+                                <a href="{$v.jumpurl|goLinkEncode}" target="_blank">查看</a>
+                            <else/>
+                                <a href="{:U(C('DEFAULT_GROUP'). '/Special/shows',array('id' => $v['id']))}" target="_blank">查看</a>
+                            </if>
+                            <a href="{:U(GROUP_NAME. '/Special/edit',array('id' => $v['id']))}">编辑</a>
+                            <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Special/del',array('id' => $v['id']))}')">删除</a>
+                        <else/>
+                             <a href="javascript:void()" onclick="dr_dialog_del('确实要还原该项吗？','{:U(GROUP_NAME. '/Special/restore',array('id' => $v['id'], 'pid' => $pid))}')">还原</a>
+                            <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Special/clear',array('id' => $v['id']))}')">彻底删除</a>
+                        </if>
+    				</td>
+                </tr>
+            </tbody>
+            </foreach>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <if condition='ACTION_NAME eq "index"'>
+                        <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Special/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                    <else/>
+                        <a href="javascript:void()" onclick="dr_confirm_hy_all('确实要还原选择项吗？','{:U(GROUP_NAME.'/Special/restore',  array('batchFlag' => 1))}')" class="onloading"><em>还原</em></a><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        <a href="javascript:void()" onclick="dr_confirm_del_all('确实要彻底删除选择项吗？','{:U(GROUP_NAME.'/Special/clearBatch', array('batchFlag' => 1))}')" class="onloading"><em>彻底删除</em></a>
+                    </if>
+                </td>
+                <td colspan="4" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

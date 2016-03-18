@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>SEO参数</em></a>
+    </div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/seo')}">
+		<div>
+		<dl>
+			<dt> 网站标题：</dt>
+			<dd>
+				<input type="text" name="cfg_webtitle" class="inp_one inp_large" value="{$Think.config.cfg_webtitle}" />
+			</dd>
+			<dd class="desc">站点首页title的设置</dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 站点关键词：</dt>
+			<dd>
+				<input type="text" name="cfg_keywords" class="inp_one inp_large" value="{$Think.config.cfg_keywords}" />
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 站点描述：</dt>
+			<dd>
+				<textarea name="cfg_description" class="tarea_default w390">{$Think.config.cfg_description}</textarea><br/>
+				
+			</dd>
+		</dl>
+		<dl>
+            <dt>核心关键词：</dt>
+            <dd>
+                <input type="text" name="cfg_site_hxkey" class="inp_one w390" value="{$Think.config.cfg_site_hxkey}"/>
+            </dd>
+            <dd class="desc"></dd>
+			<dd></dd>
+        </dl>
+        <style type="text/css">
+			.kw a {padding:5px;border:1px solid #dcdcdc;background: #fafafa;border-radius: 3px;}
+			.kw a.click {background: #368ee0;color:#fff;}
+        </style>
+        <dl>
+            <dt>长尾关键词：</dt>
+            <dd class="kw">
+            	<a href="javascript:;">厂</a>
+            	<a href="javascript:;">厂家</a>
+            	<a href="javascript:;">价格</a>
+            	<a href="javascript:;">供应商</a>
+            	<a href="javascript:;">服务商</a>
+            	<a href="javascript:;">批发</a>
+            	<a href="javascript:;">专卖</a>
+            	<a href="javascript:;">规格</a>
+            	<a href="javascript:;">售后</a>
+            	<a href="javascript:;">中心</a>
+            	<a href="javascript:;">公司</a>
+            	<a href="javascript:;">订购</a>
+            	<a href="javascript:;">品牌</a>
+            	<a href="javascript:;">十大品牌</a>
+            	<a href="javascript:;">哪家好</a>
+            	<a href="javascript:;">多少钱</a>
+            	<a href="javascript:;">维修</a>
+            	<a href="javascript:;">检测</a>
+                <!-- <input type="text" name="cfg_site_cwkey" class="inp_one" value="{$Think.config.cfg_site_cwkey}" style="width:400px;"/> -->
+                <input type="hidden" name="cfg_site_cwkey" class="inp_one" value="{$Think.config.cfg_site_cwkey}"/>
+            </dd>
+            <dd class="desc"></dd>
+			<dd></dd>
+        </dl>
+        <script type="text/javascript">
+        var cfkw = $("input[name = 'cfg_site_cwkey']").val();
+        var cfkwarr = cfkw.split(',');
+        $.each($('.kw').find('a'),function () {
+        	 for(var i = 0; i<cfkwarr.length;i++) {
+        	 	if(cfkwarr[i] == $(this).html()) {
+        	 		$(this).addClass('click');
+        	 	}
+        	 }
+        });
+
+        $('.kw').find('a').click(function () {
+        	if($(this).hasClass('click')) {
+        		$(this).removeClass('click');
+        		var aClassName = [];
+        		$.each($('.kw').find('a'),function () {
+        			if($(this).hasClass('click')) {
+        				aClassName.push($(this).html());
+        			}
+        		});
+        		$("input[name = 'cfg_site_cwkey']").val(aClassName.join(","));
+        	}else {
+        		$(this).addClass('click');
+        		var aClassName = [];
+        		$.each($('.kw').find('a'),function () {
+        			if($(this).hasClass('click')) {
+        				aClassName.push($(this).html());
+        			}
+        		});
+        		$("input[name = 'cfg_site_cwkey']").val(aClassName.join(","));
+        	}
+        });
+        </script>
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+</body>
+</html>

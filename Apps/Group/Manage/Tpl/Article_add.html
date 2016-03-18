@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorpicker.js"></script>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}"; 
+		window.UEDITOR_CONFIG.imagePath = "" ;//"__ROOT__/uploads/img/" ;      
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;
+		window.UEDITOR_CONFIG.imageManagerPath = "";//图片在线管理修正地址     
+
+
+		UE.getEditor('content');
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/i18n/jquery.jBox-zh-CN.js"></script>
+<link type="text/css" rel="stylesheet" href="__DATA__/static/jq_plugins/jBox/Skins2/blue/jbox.css"/>
+<script type="text/javascript">
+$(function () {
+	//缩略图上传
+	var litpic_tip = $(".litpic_tip");
+	var btn = $(".litpic_btn span");
+	$("#fileupload").wrap("<form id='myupload' action='{:U(GROUP_NAME. '/Public/upload', array('tb' => 2))}' method='post' enctype='multipart/form-data'></form>");
+    $("#fileupload").change(function(){
+    	if($("#fileupload").val() == "") return;
+		$("#myupload").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+        		$('#litpic_show').empty();
+				btn.html("上传中...");
+    		},
+			success: function(data) {
+				if(data.state == 'SUCCESS'){					
+					litpic_tip.html(""+ data.title +" 上传成功("+data.size+"k)");
+					var img = data.url;//原图
+					var timg = data.turl;//缩略图
+					$('#litpic_show').html("<img src='"+timg+"' width='120'>");
+					$("#litpic").val(timg);
+				}else {
+					litpic_tip.html(data.state);		
+				}			
+					btn.html("添加缩略图");
+
+			},
+			error:function(xhr){
+				btn.html("上传失败");
+				litpic_tip.html(xhr);
+			}
+		});
+	});
+
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+     });
+	
+});
+
+$(function () {
+	$('#BrowerPicture').click(function(){
+		$.jBox("iframe:{:U(GROUP_NAME.'/Public/browseFile', array('stype' => 'picture'))}",{
+			title:'YHCMS',
+			width: 650,
+   			height: 350,
+    		buttons: { '关闭': true }
+   			}
+		);
+	});
+	$("#color").colorpicker({
+	    fillcolor:true
+	});
+
+	$url = "{:U(GROUP_NAME. '/Category/getmessage')}";
+	getmessage();
+
+	checktext();
+	$("#description").keydown(function(){
+		checktext();
+	});
+});
+
+function checktext(){
+	$("#textCount").text($("#description").val().length)
+}
+
+function selectPicture(sfile) {
+	$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+	$("#litpic").val(sfile);
+	$.jBox.tip("选择文件成功");
+	$.jBox.close(true);
+}
+
+function getmessage(){
+	$cid = $("#cid").val();
+	$.ajax({type: "POST",dataType:"json", url: $url, data: {cid:$cid}, 
+		success: function(data) {
+			$("#showmessage").html(data.info);
+		}
+	});
+}
+
+</script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jqcss/jquery.datetimepicker.css">
+<script type="text/javascript" src="__PUBLIC__/js/datejs/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+$(function () {
+	$('#date_1').datetimepicker({
+		format:'Y-m-d H:i',
+		lang:'ch',
+		//timepicker:false
+	});
+});
+</script>
+
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading"><em>文章列表</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Article/add')}" class="onloading on"><em>添加文章</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Article/trach')}" class="onloading"><em>回收站</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Article/add')}">
+
+		<div class="title-info">基本设置</div>
+		<dl>
+			<dt> 标题：</dt>
+			<dd>
+				<input type="text" name="title" id="title" class="inp_large" />
+			</dd>
+		</dl>
+		<dl>
+			<dt> 副标题：</dt>
+			<dd>
+				<input type="text" name="shorttitle" class="inp_w250" />
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 所属栏目：</dt>
+			<dd class="selectWrap">
+				<select class="catelist" id="topsel" name="cid" onchange="getmessage()">
+					<foreach name='cate' item='v'>
+						<option value="{$v.id}" <if condition="($pid eq $v['id']) OR ($Think.session.artCate eq $v['id'])">selected="selected"</if> <if condition="$v['isdown'] eq 1">disabled="disabled"</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 缩略图：</dt>
+			<dd>
+				<div class="litpic_show">
+				    <div style="float:left;">
+				    <input type="text" class="inp_w250" name="litpic" id="litpic"  value="" />
+				    <input type="button" class="button" id="BrowerPicture" value="选择站内图片">
+				    </div>
+						<div class="litpic_btn">
+				        <span>添加缩略图</span>
+				        <input id="fileupload" type="file" name="mypic">
+				    </div>
+				    <div class="litpic_tip"></div>
+				    <div id="litpic_show"> </div>
+				</div>
+			</dd>
+		</dl>	
+		<div class="title-info">附加设置</div>
+
+		<dl>
+			<dt> 标题颜色：</dt>
+			<dd>
+				<input type="text" name="color" id="color" class="inp_small"/>
+			</dd>
+		</dl>	
+		<dl>
+			<dt> 作者：</dt>
+			<dd>
+				<input type="text" name="author" class="inp_small"/>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 来源：</dt>
+			<dd>
+				<input type="text" name="source" class="inp_small"/>
+			</dd>
+		</dl>
+		<dl>
+			<dt> 自定义属性：</dt>
+			<dd>
+				<foreach name='flagtypelist' item='v'>
+				<label><input type='checkbox' name='flags[]' value='{$key}' <if condition="$key eq B_JUMP">id="CK_JumpUrl"</if> /> {$v}</label>&nbsp; 
+				</foreach>
+			</dd>
+		</dl>
+
+		<div class="title-info">搜索引擎优化</div>
+		<dl>
+			<dt> 关键词：</dt>
+			<dd>
+				<input type="text" name="keywords" id="keywords" class="inp_w250" /><span class="tip">多关键词之间用“,”隔开</span>&nbsp;&nbsp;<input type="button" class="button" id="get_keywords" value="获 取">
+			</dd>
+			<dd class="desc" style="width:350px;">
+				为空则使用SEO参数设置中设置的title构成方式
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> TAG：</dt>
+			<dd>
+				<input type="text" name="tag" class="inp_large" /><span class="tip">多TAG之间用“,”隔开</span>
+			</dd>
+		</dl>
+
+
+		<dl id="JumpUrlDiv" style="display:none;">
+			<dt> 跳转网址：</dt>
+			<dd>
+				<input type="text" name="jumpurl" class="inp_large" />
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>别名(拼音)：</dt>
+			<dd>
+				<input type="text" name="etitle" class="inp_one"/><span>&nbsp;只能包含字母，数字</span>
+			</dd>
+		</dl>
+	
+		<dl>
+			<dt> 摘要：</dt>
+			<dd>
+				<textarea name="description" id="description" class="tarea_default"></textarea>
+			</dd>
+			<dd class="desc" style="width:350px;">
+				100字以内(当前已输入：<span id="textCount"></span>)
+			</dd>
+		</dl>
+		
+		<div class="title-info">正文设置</div>
+		<dl>
+			<dt> 内容：</dt>
+			<dd>
+				<textarea name="content" id="content"></textarea>
+			</dd>
+		</dl>	
+		<div class="title-info">其他设置</div>
+		<dl>
+			<dt> 延时发布时间：</dt>
+			<dd>
+				<input type="text" name="is_ys_time" class="inp_one" id="date_1" />(不填写则及时发布)
+			</dd>
+		</dl>
+		<div class="form_b">		
+			<input type="submit" class="button" id="submit" value="提 交"><input type="hidden" name="pid" value="{$pid}" />
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

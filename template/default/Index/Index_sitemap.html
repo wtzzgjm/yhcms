@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>网站地图-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/city.css">
+	<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+</head>
+<body>
+	<div class="index-bg city-index-bg">
+		<div class="center">
+			<include file="$tpl_Public_header" />
+			<div class="date">
+				<div class="date-link">
+					<div class="blue-point"></div>
+					<span>网站地图:&nbsp;</span>
+					<yhcms:position />
+				</div>
+			</div>
+			<div class="city-main">
+				<div class="hot">
+					<ul>
+					 <yhcms:catlist typeid="0" limit="100" flag="1">
+						<li><a href="{$catlist.url}">{$catlist.name}</a></li>
+					</yhcms:catlist>
+					</ul>
+				</div>
+				<div class="city_list">
+					<yhcms:catlist typeid="0" limit="100" flag="1">
+					<div class="city-class mapname">
+						<span><a href="{$catlist.url}">{$catlist.name}</a></span>
+						<div>
+							<volist name='catlist["child"]' id='v'>
+							<a href="{$v.id|getcaturl}">{$v.name}</a>
+							</volist>
+						</div>
+					</div>
+					</yhcms:catlist>
+				</div>
+			</div>
+			<include file="$tpl_Public_footer" />
+		</div>
+	</div>
+</body>
+</html>

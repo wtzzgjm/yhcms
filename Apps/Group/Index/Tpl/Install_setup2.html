@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>远航CMS安装向导</title>
+<link href="__INSTALL__/css/base.css" rel="stylesheet" type="text/css" />
+<link href="__INSTALL__/css/style.css" rel="stylesheet" type="text/css" />
+<script src="__INSTALL__/js/install.js"></script>
+</head>
+<body>
+<div class="g-install">
+  <div class="m-head">
+    <h1>远航CMS安装配置</h1>
+  </div>
+  <form action="setup3" method="post">
+  <div class="m-body">
+    <div class="tt"></div>
+    <div class="m-form">
+      
+        <div class="formitm">
+          <label class="lab">数据库地址：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_HOST" id="DB_HOST" value="127.0.0.1" />
+          </div>
+        </div>
+        <div class="formitm">
+          <label class="lab">数据库端口：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_PORT" id="DB_PORT" value="3306" />
+          </div>
+        </div>
+        <div class="formitm">
+          <label class="lab">数据库名称：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_NAME" id="DB_NAME" value="yhcms"  />
+          </div>
+        </div>
+        <div class="formitm">
+          <label class="lab">数据库用户名：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_USER" id="DB_USER" value="root"  />
+          </div>
+        </div>
+        <div class="formitm">
+          <label class="lab">数据库密码：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_PWD" id="DB_PWD" value="" />
+          </div>
+        </div>
+        <div class="formitm">
+          <label class="lab">数据表前缀：</label>
+          <div class="ipt">
+            <input type="text" class="u-element" name="DB_PREFIX"  value="yh_" id="DB_PREFIX" />
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="m-foot"> 
+  	<a href="setup1">上一步</a>
+    <button type="submit" class="submit">安装</button>
+  </div>
+  </form>
+</div>
+</body>
+</html>

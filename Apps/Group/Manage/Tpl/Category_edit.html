@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		//图片上传配置区
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;   //图片上传提交地址
+		window.UEDITOR_CONFIG.imagePath = "" ; //'__ROOT__/uploads/img/'      //图片修正地址，引用了fixedImagePath,
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;////图片在线管理的处理地址
+		window.UEDITOR_CONFIG.imageManagerPath = "";// "__ROOT__"; //图片在线管理修正地址     
+
+
+		UE.getEditor('content');
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="__DATA__/static/jq_plugins/jBox/i18n/jquery.jBox-zh-CN.js"></script>
+<link type="text/css" rel="stylesheet" href="__DATA__/static/jq_plugins/jBox/Skins2/blue/jbox.css"/>
+<script type="text/javascript">
+$(function () {
+	//缩略图上传
+	var litpic_tip = $(".litpic_tip");
+	var btn = $(".litpic_btn span");
+	$("#fileupload").wrap("<form id='myupload' action='{:U(GROUP_NAME. '/Public/upload', array('tb' => 2))}' method='post' enctype='multipart/form-data'></form>");
+    $("#fileupload").change(function(){
+    	if($("#fileupload").val() == "") return;
+		$("#myupload").ajaxSubmit({
+			dataType:  'json',
+			beforeSend: function() {
+        		$('#litpic_show').empty();
+				btn.html("上传中...");
+    		},
+			success: function(data) {
+				//litpic_tip.html("<b>"+data.title+"("+data.size+"k)</b> <span class='delimg' rel='"+data.url+"'>删除</span>");
+				if(data.state == 'SUCCESS'){					
+					litpic_tip.html(""+ data.title +" 上传成功("+data.size+"k)");
+					var img = data.url;//原图
+					var timg = data.turl;//缩略图
+					$('#litpic_show').html("<img src='"+timg+"' width='120'>");
+					$("#litpic").val(timg);
+				}else {
+					litpic_tip.html(data.state);		
+				}			
+					btn.html("添加缩略图");
+
+			},
+			error:function(xhr){
+				btn.html("上传失败");
+				litpic_tip.html(xhr);
+			}
+		});
+	});
+
+	$('#CK_JumpUrl').click(function(){
+            var inputs = $(this).parents('dl').find('input');
+            if($(this).attr('checked')) {
+                $('#JumpUrlDiv').show();
+
+            }else {
+                $('#JumpUrlDiv').hide();
+            }
+            
+     });
+	
+});
+
+$(function () {
+
+	$('#BrowerPicture').click(function(){
+		$.jBox("iframe:{:U(GROUP_NAME.'/Public/browseFile', array('stype' => 'picture'))}",{
+			title:'YHCMS',
+			width: 650,
+   			height: 350,
+    		buttons: { '关闭': true }
+   			}
+		);
+	});
+	
+
+	$("select[name='modelid'] option").each(function(i,o){
+		if($(this).attr("selected")){
+			var styleid = $(this).val();
+			if (styleid != 3) {
+				$("#get_keywords").hide();
+			}else{
+				$("#get_keywords").show();
+			};
+				
+		}
+	});
+	checktext();
+	$("#description").keydown(function(){
+		checktext();
+	});
+});
+function checktext(){
+	var curLength = $("#description").val().length;	
+		if(curLength >= 100){
+			var num = $("#description").val().substr(0,100);
+			$("#description").val(num);
+		}
+		else{
+			$("#textCount").text($("#description").val().length)
+		}
+}
+
+function selectPicture(sfile) {
+	$('#litpic_show').html("<img src='"+sfile+"' width='120'>");
+	$("#litpic").val(sfile);
+	$.jBox.tip("选择文件成功");
+	$.jBox.close(true);
+}
+
+
+</script>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Category/index')}" class="onloading"><em>栏目分类</em></a><span>|</span>
+        <a href="#" class="onloading on"><em>编辑栏目</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/Category/edit')}">
+		<div class="title-info">基本信息</div>
+		<dl>
+			<dt> 栏目名称：</dt>
+			<dd>
+				<input type="text" name="name" id="title" class="inp_one" value="{$data.name}" /><span>&nbsp;&nbsp;* 最多支持三级栏目</span>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 所属栏目：</dt>
+			<dd>
+				<select name="pid">
+					<option value="0">顶级栏目</option>
+					<foreach name='cate' item='v'>
+					<option value="{$v.id}" <if condition="$data.pid eq $v['id']">selected="selected"</if>>{$v.delimiter}{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 排序：</dt>
+			<dd>
+				<input type="text" name="sort" class="inp_one w100" value="{$data.sort}" />
+			</dd>
+			<dd class="desc" style="width:350px;">
+				模板采用排序调用时，数值越小越靠前
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt> 栏目图片：</dt>
+			<dd>
+				<div class="litpic_show">
+				    <div style="float:left;">
+				    <input type="text" class="inp_w250" name="litpic" id="litpic"  value="{$data.litpic}" />
+				    <input type="button" class="button" id="BrowerPicture" value="选择站内图片">
+				    </div>
+						<div class="litpic_btn">
+				        <span>添加缩略图</span>
+				        <input id="fileupload" type="file" name="mypic">
+				    </div>
+				    <div class="litpic_tip"></div>
+				    <div id="litpic_show">
+				    <if condition="$data['litpic']"><img src="{$data.litpic}" width='120' /></if>
+				    </div>
+				</div>
+			</dd>
+		</dl>
+		
+		<div class="title-info">模板设置</div>
+
+		<dl>
+			<dt> 内容模型：</dt>
+			<dd>
+				<select name="modelid">
+					<foreach name='mlist' item='v'>
+					<option value="{$v.id}" <if condition="$data.modelid eq $v['id']">selected="selected"</if>>{$v.name}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		
+		
+		<dl>
+			<dt>栏目模板：</dt>
+			<dd>
+				<select name="template_list">
+					<foreach name='styleListList' item='v'>
+					<option value="{$v}" <if condition="$data.template_list eq $v">selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt>内容页模板：</dt>
+			<dd>
+				<select name="template_show">
+					<foreach name='styleShowList' item='v'>
+					<option value="{$v}" <if condition="$data.template_show eq $v">selected="selected"</if>>{$v}</option>
+					</foreach>
+				</select>
+			</dd>
+		</dl>
+
+		<div class="title-info">搜索引擎优化</div>
+		<dl>
+			<dt> Seo标题：</dt>
+			<dd>
+				<input type="text" name="seotitle" class="inp_one" id="seotitle" value="{$data.seotitle}" />
+			</dd>
+			<dd class="desc" style="width:350px;">
+				为空则使用SEO参数设置中设置的title构成方式
+			</dd>
+		</dl>
+		<dl>
+			<dt> 关键词：</dt>
+			<dd>
+				<input type="text" name="keywords" id="keywords" class="inp_one" value="{$data.keywords}" /><!--&nbsp;&nbsp;<input type="button" class="button" id="get_keywords" value="获 取">-->
+			</dd>
+			<dd class="desc" style="width:350px;">
+				用于搜索引擎优化,多个关键词请用","隔开
+			</dd>
+		</dl>
+
+		<dl>
+			<dt> 栏目描述：</dt>
+			<dd>
+				<textarea name="description" id="description" class="tarea_default">{$data.description}</textarea>
+			</dd>
+			<dd class="desc" style="width:350px;">
+				100字以内(当前已输入：<span id="textCount"></span>)
+			</dd>
+		</dl>
+		<div class="title-info">其他设置</div>
+		<dl>
+			<dt>外部链接</dt>
+			<dd>
+				<input type="checkbox" name="type" value="1" <if condition='$data.type eq 1'>checked="checked"</if> />外部链接
+			</dd>
+		</dl>	
+
+		<dl>
+			<dt>别名(拼音)：</dt>
+			<dd>
+				<input type="text" name="ename" id="ename" class="inp_one" value="{$data.ename}"/><span>只能包含字母，数字</span>
+			</dd>
+		</dl>	
+		<dl id="nextdl">
+			<dt> 显示：</dt>
+			<dd>
+				<input type="radio" name="status" value="1" <if condition='$data.status eq 1'>checked="checked"</if> />显示
+				<input type="radio" name="status" value="0" <if condition='$data.status eq 0'>checked="checked"</if> />隐藏
+			</dd>
+		</dl>	
+		
+		<if condition="$mid eq 3">
+			<dl>
+				<dt>额外字段：</dt>
+				<dd>
+					<input type="radio" name="other" value="1" <if condition='$data.other eq 1'>checked="checked"</if>/>开启
+					<input type="radio" name="other" value="2" <if condition='$data.other eq 2'>checked="checked"</if>/>关闭
+				</dd>
+			</dl>
+		</if>
+
+		
+		</div>
+		<div class="form_b">
+			&nbsp;&nbsp;<input type="hidden" name="id" value="{$data.id}"/>
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+	   </form>
+	</div>
+
+
+</body>
+</html>

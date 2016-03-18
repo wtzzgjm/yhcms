@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <div class="content-menu ib-a blue line-x">
+            <!--<a href="{:U(GROUP_NAME.'/Order/index')}" class="onloading"><em>在线订购设置</em></a> |-->
+            <a href="{:U(GROUP_NAME.'/Order/show')}" class="onloading on"><em>查看订单</em></a>
+        </div>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Order/del')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>产品名称</th>
+                    <th width="80px">数量</th>
+                    <th width="80px">订购者</th>
+                    <th width="80px">联系电话</th>
+                    <th width="150px">订购时间</th>
+                    <th width="80px">已读/未读</th>
+                    <th width="80px">是否发送邮箱</th>
+                    <th width="100px">操作</th>
+                </tr>
+            </thead>
+            <style type="text/css">
+                .noborder {border:none;text-align: center;}
+            </style>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td align="center">{$v.p_name}</td>
+                    <td align="center">{$v.num}</td>
+                    <td align="center">{$v.name}</td>
+                    <td align="center">{$v.tel}</td>
+                    <td align="center">{$v.time|date='Y-m-d H:i:s', ###}</td>
+                    <td align="center" id="look{$v['id']}">
+                        <if condition="$v['is_look'] eq '1'">
+                            <font color="blue">已读</font>
+                        <else/>
+                            <font color="red">未读</font>
+                        </if>
+                    </td>
+                    <td align="center">{$v.is_email}</td>
+                    <td align="center">
+                        <a href="javascript:;" onclick="show_order('{:U(GROUP_NAME. '/Order/read',array('id' => $v['id']))}',{$v['id']})">查看</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Order/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+                <script type="text/javascript">
+                    $(function () {
+                        var postUrl = "{:U(GROUP_NAME.'/Article/pxajax')}";
+                        $('.pxajax').focus(function () {
+                            $(this).removeClass('noborder');
+                        }).blur(function () {
+                            $(this).addClass('noborder');
+                            var _t = $(this);
+                            $.ajax({
+                             'type': 'POST',
+                             'dataType' :'json',
+                             'url': postUrl ,
+                             'data': 'val='+_t.attr('value')+'&cid='+_t.attr('name'),
+                             success: function (data) {
+                                    location.reload();
+                                } 
+                            });
+                        });
+                    });
+                </script>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="8">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Order/alldel')}')" class="onloading"><em>批量删除</em></a>
+                </td>
+            </tr>
+        </table>
+    </form>
+  <if condition="$is_showpage neq 1">
+    <form action="?" method="post" id="cpform" name="cpform">
+    <table width="100%">
+        <td>
+            <div style="float:right;">{$page}</div>
+            <div style="float:right;">
+                每页&nbsp;
+                <input type="hidden" name="pid" value="{$pid}">
+                <select name="pagerows" class="pagerows">
+                    <option value="10" <if condition='$pagerows eq 10'>selected</if>>10</option>
+                    <option value="20" <if condition='$pagerows eq 20'>selected</if>>20</option>
+                    <option value="30" <if condition='$pagerows eq 30'>selected</if>>30</option>
+                    <option value="40" <if condition='$pagerows eq 40'>selected</if>>40</option>
+                    <option value="50" <if condition='$pagerows eq 50'>selected</if>>50</option>
+                </select>&nbsp;条&nbsp;&nbsp;
+            </div>
+        </td>
+    </table>
+    </form>
+    <script type="text/javascript">
+    $(function(){ 
+        $(".pagerows").change(function(){
+            $('#cpform').submit();
+        });
+    });
+    </script>
+  </if>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Sitelink/index')}" class="onloading on"><em>关键词内链管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Sitelink/add')}" class="onloading"><em>添加关键词</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="table-list">    
+    <form action="{:U(GROUP_NAME.'/Sitelink/delAll')}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>关键词</th>
+                    <th width="200px">连接地址</th>
+                    <th width="110px">替换个数</th>
+                    <th width="120px">打开方式</th>
+                    <th width="120px">是否启用</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td>{$v.name}</td>
+                    <td align="center">{$v.url}</td>
+                    <td align="center"><if condition="$v.num neq ''">{$v.num}<else/>所有</if></td>
+                    <td align="center">
+                        <if condition="$v.otype eq '_blank'">新开窗口<else/>当前窗口</if>
+                    </td>
+                    <td align="center"><if condition="$v.isok eq '1'">启用<else/>禁用</if></td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME. '/Sitelink/edit',array('id' => $v['id']))}">编辑</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Sitelink/del',array('id' => $v['id']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Sitelink/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a>
+                </td>
+                <td colspan="4" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

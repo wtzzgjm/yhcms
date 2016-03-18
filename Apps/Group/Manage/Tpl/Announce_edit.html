@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=720;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;
+		window.UEDITOR_CONFIG.imagePath = "" ;    
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;
+		window.UEDITOR_CONFIG.imageManagerPath = ""; 
+
+		UE.getEditor('content');
+
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/calendar/jscal2.css"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/calendar/border-radius.css"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/calendar/win2k.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/calendar.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/en.js"></script>
+<script src="__PUBLIC__/js/my97/WdatePicker.js"></script>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Announce/index')}" class="onloading"><em>公告管理</em></a><span>|</span>
+        <a href="#" class="onloading on"><em>编辑公告</em></a>
+    </div>
+    <div class="bk10"></div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Announce/edit')}">
+		<dl>
+			<dt>公告标题：</dt>
+			<dd>
+				<input type="text" name="title" class="inp_large" value="{$vo.title}" />
+			</dd>
+		</dl>
+		<dl>
+            <dt> 起始日期：</dt>
+            <dd>
+                
+                <input type="text" class="inp_one" name="starttime" id="starttime" value="{$vo.starttime|date='Y-m-d H:i:s',###}" onClick="WdatePicker({dateFmt:'yyyy-MM-dd  H:mm:ss',minDate:'%y-%M-%d %H:%M:%S}'})"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt> 截止日期：</dt>
+            <dd>
+                <input type="text" class="inp_one" name="endtime" id="endtime" value="{$vo.endtime|date='Y-m-d H:i:s',###}" onClick="WdatePicker({dateFmt:'yyyy-MM-dd  H:mm:ss',minDate:'%y-%M-%d %H:%M:%S}'})"/>
+            </dd>
+        </dl>
+		<dl>
+			<dt>公告内容：</dt>
+			<dd>
+				<textarea name="content" id="content">{$vo.content}</textarea>
+			</dd>
+		</dl>
+		<div class="form_b">		
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+	   </form>
+	</div>
+</div>
+</body>
+</html>

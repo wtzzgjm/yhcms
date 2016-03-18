@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理中心</title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="http://master.yhcms.cn/index.php?m=Api&a=c_config"></script>
+<style type="text/css">
+.box .box-title {
+    border-bottom: 1px solid #DDDDDD;
+    padding: 7px 0 7px 10px;
+}
+.box .box-title h3 {
+    color: #444444;
+    float: left;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 3px 0;
+}
+.box .content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 20px;
+}
+.box .box-title h3 i {
+	font-size:18px;
+	margin-right:10px;
+}
+.mleft {
+	width:120px;
+	text-align:right;
+}
+</style>
+</head>
+<body>
+<div class="box">
+    <div class="box-title">
+      	<h3><i class="fa fa-globe"></i>网站信息</h3>
+      	<div class="clear"></div>
+    </div>
+    <div class="content">
+      	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	          	<td class="mleft" align="right">个人信息：</td>
+	          	<td>&nbsp;您好，{$Think.session.yang_adm_username}&nbsp;&nbsp;&nbsp;&nbsp;上次登录时间：{$Think.session.yang_adm_logintime}&nbsp;&nbsp;&nbsp;&nbsp;上次登录IP：{$Think.session.yang_adm_loginip}</td>
+	        </tr>
+	        <tr>
+	          	<td class="mleft" align="right">操作系统：</td>
+	          	<td>&nbsp;{$os}</td>
+	        </tr>
+	        <tr>
+	          	<td class="mleft" align="right">服务器软件：</td>
+	          	<td>&nbsp;{$software}</td>
+	        </tr>
+	        <tr>
+	          	<td class="mleft" align="right">MySQL 版本：</td>
+	          	<td>&nbsp;{$mysql_ver}</td>
+	        </tr>
+	        <tr>
+	          	<td class="mleft" align="right">上传文件：</td>
+	          	<td>&nbsp;{$environment_upload}</td>
+	        </tr>
+	        <tr>
+	            <td class="mleft" width="18%" align="right">当前版本：</td>
+	            <td id="version" style="color:blue;">&nbsp;{$version}&nbsp;&nbsp;&nbsp;&nbsp;[ <a href="http://master.yhcms.cn/version/yhcms/index.html" target="_blank">历史版本</a> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <a href="{:U(GROUP_NAME. '/Index/sql')}">执行SQL</a> ]</td>
+	        </tr>
+	        <tr>
+	            <td class="mleft" width="18%" align="right">最新版本：</td>
+	            <td id="cfg_version"></td>
+	        </tr>
+	        <tr>
+	            <td class="mleft" align="right">技术支持：</td>
+	            <td id="cfg_fae"></td>
+	        </tr>
+	        <tr>
+	            <td class="mleft" align="right">软件授权：</td>
+	            <td id="cfg_empower"></td>
+	        </tr>
+	    </table>
+    </div>
+</div>
+<div class="box">
+    <div class="box-title">
+      	<h3><i class="fa fa-cloud"></i>官方新闻</h3>
+      	<div class="clear"></div>
+    </div>
+    <div class="content" id="finecms_news" style="padding-left:40px;"></div>
+</div>
+<div class="box">
+    <div class="box-title">
+      	<h3><i class="fa fa-group"></i>研发团队</h3>
+      	<div class="clear"></div>
+    </div>
+    <div class="content" id="cfg_team"></div>
+</div>
+</body>
+</html>

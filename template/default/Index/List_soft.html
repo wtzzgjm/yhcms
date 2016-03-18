@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>{$title}-<yhcms:cfg_webname /></title>
+  <meta name="keywords" content="{$keywords}" />
+  <meta name="description" content="{$description}" />
+  <link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+  <script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+</head>
+<body>
+<include file="$tpl_Public_header" />
+<!--ad start-->
+<div class="ad w980"><yhcms:block name='show_banner' /></div>
+<!--ad end-->
+<div class="Dg">您当前位置：<yhcms:position /></div>
+<!--pages start-->
+<div class="pages w980">
+  <div class="pages_l fl">
+    <div class="pages_l_c">
+			<div class="tit">
+				<h4 class="fl">栏目列表</h4>
+			</div>
+			<ul>
+        <if condition="$flag_son">
+          <yhcms:catlist typeid='$cid' type='son' flag='1'>
+          <li class="nopic"><span></span><a href="{$catlist.url}">{$catlist.name}</a></li>
+          </yhcms:catlist>
+        <else/>
+          <if condition = "$cate['pid'] gt 0">
+              <yhcms:catlist typeid="$cate['pid']" type='son' flag='1'>
+              <li class="nopic"><span></span><a href="{$catlist.url}">{$catlist.name}</a></li>
+              </yhcms:catlist>
+          </if>
+        </if>                  
+			</ul>
+		</div><br>
+    <div class="pages_l_c">
+      <div class="tit">
+        <h4 class="fl">最新下载</h4>
+      </div>
+      <ul>
+        <yhcms:soflist limit='6' titlelen='12'>
+          <li class="nopic"><span></span><a href="{$soflist.url}">{$soflist.title}</a></li>
+        </yhcms:soflist>                  
+      </ul>
+    </div>
+  </div>
+  <div class="pages_r fr">
+    <div class="pages_r_c">
+      <dl>
+        <div class="fl">
+          <dt class="tit">{$cate.name}</dt>
+        </div>
+      </dl>
+      <div class="news_list">
+        <ul>
+          <yhcms:list typeid="$cid" pagesize='15'>
+            <li><span>{$list.publishtime|date='Y-m-d',###}</span><a href="{$list.url}" title="{$list.title}">{$list.title}</a></li>
+          </yhcms:list>                                                                
+        </ul>                  
+      </div>
+      <div class="paging">{$page}</div>
+    </div>                      
+  </div>
+</div>
+<div class="clear"></div>
+<!--pages end-->
+<include file="$tpl_Public_footer" />
+</body>
+</html>

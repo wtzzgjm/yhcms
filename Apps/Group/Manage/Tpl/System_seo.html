@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<style type="text/css">
+dd.desc{width: 150px; height: 30px; padding: 0px 10px;}
+</style>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>SEO参数</em></a>
+    </div>
+	<div class="form">
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME.'/System/seo')}">
+		<div>
+		<dl>
+			<dt> 网站标题：</dt>
+			<dd>
+				<input type="text" name="cfg_webtitle" class="inp_one inp_large" value="{$Think.config.cfg_webtitle}" />
+			</dd>
+			<dd class="desc">站点首页title的设置</dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 站点关键词：</dt>
+			<dd>
+				<input type="text" name="cfg_keywords" class="inp_one inp_large" value="{$Think.config.cfg_keywords}" />
+			</dd>
+			<dd class="desc"></dd>
+			<dd></dd>
+		</dl>
+		<dl>
+			<dt> 站点描述：</dt>
+			<dd>
+				<textarea name="cfg_description" class="tarea_default w390">{$Think.config.cfg_description}</textarea><br/>
+				
+			</dd>
+		</dl>
+		<dl>
+            <dt>核心关键词：</dt>
+            <dd>
+                <input type="text" name="cfg_site_hxkey" class="inp_one w390" value="{$Think.config.cfg_site_hxkey}"/>
+            </dd>
+            <dd class="desc"></dd>
+			<dd></dd>
+        </dl>
+        <style type="text/css">
+            .kw {width: 100%;overflow: hidden;}
+			.kw ul {width: 800px;overflow: hidden;margin-left: 125px;}
+			.kw ul li  {width: 30%;height:32px;line-height: 32px;float:left;padding-right: 3.33%;border-bottom: 1px solid #dcdcdc}
+            .kw ul li span {display: block;width: 70%;float: left;text-align: center;}
+            .kw ul li i {float: right;position: relative;top:11px;margin-right: 10px;cursor:pointer;}
+            .in-gp {width: 800px;height:32px;margin-left: 125px;margin-top: 20px;}
+            .in-gp input {height:28px;}
+
+            .diag {width: 100%;height:130%;position: fixed;top:0;left:0;display: none;}
+            .diag .dia-wrap {width: 100%;height:100%;background:#000;opacity: 0.3;filter:alpha(opacity=70);}
+            .diag .content {width: 300px;height:50px;background: #fafafa;position: fixed;top:50%;left:50%;margin-top: -25px;margin-left: -150px;border-radius: 2px;}
+            .diag .content .in-gp2 {width: 800px;height:32px;margin-top: 10px;margin-left: 10px;}
+            .diag .content .in-gp2 input {height:28px;width:200px;}
+            .diag .content .in-gp2 i {margin:0 8px;cursor: pointer}
+
+             .diag-info .info-wrap {width: 300px;height:auto;background:#fff;position: fixed;top:50%;left:50%;margin-left:-150px;margin-top:-130px;}
+            .diag-info .info-wrap h4 {width: 100%;height:32px;line-height: 32px;text-indent: 12px;font-weight: 100;border-bottom: 1px solid #dcdcdc;}
+            .diag-info .info-wrap p {padding:8px 12px; line-height: 24px;margin-bottom: 0;}
+            .diag-info .info-wrap .btn {width: 60%;margin:8px 20%;line-height: 30px;background: #368ee0;padding:0;color:#fff;}
+
+            .diag-del .info-wrap .btn {width: 40%;margin:8px 5%;float:left;}
+            .diag-del .info-wrap .y-close {background:#dcdcdc;color:#999;}
+        </style>
+        <dl>
+            <dt>长尾关键词：</dt>
+            <dd class="kw">
+            	<ul>
+                    <foreach name='cwkey' item='v'>
+                    <li><span>{$v}</span><i class="fa fa-close"></i><i class="fa fa-pencil-square-o"></i></li>
+                    </foreach> 
+                </ul>
+                <input type="hidden" name="cfg_site_cwkey" class="inp_one valueadd" value="{$Think.config.cfg_site_cwkey}"/>
+            </dd>
+            <dd>
+                <div class="in-gp">
+                    <input type="text" name="sea">
+                    <input type="button" class="button" value="添加">
+                </div>
+            </dd>
+        </dl>
+
+        <div class="diag diag-edit">
+            <div class="dia-wrap"></div>
+            <div class="content">
+                <div class="in-gp2">
+                    <input type="text" name="sea">
+                    <i class="fa fa-check fa-lg"></i>
+                    <i class="fa fa-close fa-lg"></i>
+                </div>
+            </div>
+        </div>
+    
+        <div class="diag diag-info diag-aa">
+            <div class="dia-wrap"></div>
+            <div class="info-wrap">
+                <h4>提示</h4>
+                <p></p>
+                <div class="btn y-close">确定</div>
+            </div>
+        </div>
+
+         <div class="diag diag-info diag-del">
+            <div class="dia-wrap"></div>
+            <div class="info-wrap">
+                <h4>提示</h4>
+                <p></p>
+                <div class="btn y-true">确定</div>
+                <div class="btn y-close">取消</div>
+            </div>
+        </div>
+
+       
+		<div class="form_b">
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+		</div>
+		
+	   </form>
+	</div>
+
+    <script type="text/javascript">
+    var y_up_id = null;
+    //添加
+    $('.in-gp').find("input[type='button']").on('click', function () {
+         if($(this).parent().find("input[type='text']").val() == '') {
+            disInfo('请输入名称');
+        }else {
+             var addHtml = ' <li><span>' + $('.in-gp').find("input[type='text']").val() +'</span><i class="fa fa-close"></i><i class="fa fa-pencil-square-o"></i></li>';
+            $('.kw').find('ul').append(addHtml);
+            $(this).parent().find("input[type='text']").val('');
+
+            addValue();
+        }
+    })
+
+    //删除
+    $('.kw').on('click', '.fa-close', function () {
+        y_del_id = $(this).parent().index();
+        diaDel('确定删除吗');
+    });
+
+    //修改
+    $('.kw').on('click', '.fa-pencil-square-o', function () {
+        $('.diag-edit').css('display', 'block');
+        $('.diag-edit').find('input').val( y_up_id = $(this).parent().children('span').html());
+        y_up_id = $(this).parent().index();
+    });
+
+    //确认修改
+    $('.diag-edit').find('.fa-check').on('click', function () {
+        if($(this).parent().children('input').val() == '') {
+            disInfo('请输入名称');
+        }else {
+             $('.kw').find('li').eq(y_up_id).children('span').html($(this).parent().children('input').val());
+            $('.diag-edit').css('display', 'none');
+            addValue();
+        }
+    })
+
+
+    //取消修改
+    $('.diag-edit').find('.fa-close').on('click', function () {
+        $('.diag-edit').css('display', 'none');
+        $('.diag-edit').find('input').val('');
+    })
+
+    function disInfo(info) {
+        $('.diag-aa').css('display', 'block');
+        $('.diag-aa').find('p').html(info);
+    }
+
+    $('.diag').find('.y-close').on('click', function () {
+        $('.diag-info').css('display', 'none');
+    })
+
+    function diaDel(info) {
+        $('.diag-del').css('display', 'block');
+        $('.diag-del').find('p').html(info);
+    }
+
+    $('.diag-del').find('.y-true').on('click', function () {
+        $('.kw').find('li').eq(y_del_id).remove();
+        $('.diag-del').css('display', 'none');
+        addValue();
+    })
+
+
+    function addValue () {
+        var theValue = '';
+        $('.kw').find('li').each(function () {
+            if(theValue == '') {
+                theValue += $(this).find('span').html();
+            }else {
+                theValue += ',' + $(this).find('span').html();
+            }
+        })
+        $('.valueadd').val(theValue);
+    }
+    </script>
+
+</body>
+</html>

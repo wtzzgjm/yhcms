@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript">
+	window.UEDITOR_HOME_URL = '__DATA__/ueditor/';
+	window.onload = function() {
+		window.UEDITOR_CONFIG.initialFrameWidth=600;
+		window.UEDITOR_CONFIG.initialFrameHeight=300;
+		//图片上传配置区
+		window.UEDITOR_CONFIG.imageUrl = "{:U(GROUP_NAME. '/Public/upload')}" ;   //图片上传提交地址
+		window.UEDITOR_CONFIG.imagePath = "" ; //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置      
+		window.UEDITOR_CONFIG.imageManagerUrl = "{:U(GROUP_NAME. '/Public/getFileOfImg')}" ;////图片在线管理的处理地址
+		window.UEDITOR_CONFIG.imageManagerPath = ""; //图片在线管理修正地址  
+			UE.getEditor('content');
+
+	}
+</script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__DATA__/ueditor/ueditor.all.min.js"></script>	
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="#" class="onloading on"><em>{$vo.name}</em></a><span>|</span>
+        <if condition='ACTION_NAME eq "index"'>
+        <foreach name='poscate' item='v'>
+        	<a href="{:U(GROUP_NAME. '/' . ucfirst($v['tablename']) .'/index', array('pid' => $v['id']))}" class='onloading'>{$v.name}</a>&nbsp;&gt;&nbsp;
+        </foreach>
+    </if>
+    </div>
+    <div class="bk10"></div>
+    <if condition="$subcate">
+    <div class="explain-col">
+        <font color="gray">
+            <if condition='$subcate'>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;子栏目：</span>
+                <foreach name='subcate' item='v'>
+                    [&nbsp;<a href="{:U(GROUP_NAME. '/'. $v['modelname'] . '/index', array('pid' => $v['id']))}">{$v.name}</a>&nbsp;]
+                </foreach>
+            </if>
+        </font>
+    </div>  
+    </if>
+    <div class="bk10"></div>
+    <div class="explain-col">
+        <font color="gray">
+            &nbsp;&nbsp;&nbsp;&nbsp;温馨提醒：如果没有设置封面模版且有子栏目，请不要在这里添加内容。
+        </font>
+    </div>  
+	<div class="form">
+		<if condition='!$subcate'>
+		<form method='post' id="form_do" name="form_do" action="{:U(GROUP_NAME. '/Page/indexHandle')}">
+		<dl><dt>摘要：</dt>
+			<dd>
+				<textarea name="description" class="tarea_default">{$vo.description}</textarea>
+			</dd>
+		</dl>
+		<dl><dt>内容：</dt><dd>
+				<textarea name="content" id="content">{$vo.content}</textarea>
+			</dd>
+		</dl>
+		<dl>
+			
+		</dl>	
+		<div class="form_b">
+			<input type="hidden" name="id" value="{$pid}" />
+			<input type="hidden" name="pid" value="{$pid}" />
+			<input type="submit" class="button" id="submit" value="提 交">
+		</div>
+	   </form>
+	</if>
+	</div>
+
+
+</body>
+</html>

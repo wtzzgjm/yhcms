@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$areasname}{$title}-<yhcms:cfg_webname /></title>
+<meta name="keywords" content="{$keywords}" />
+<meta name="description" content="{$description}" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/re.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/js/public.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/sliding.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/moveTime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/banner.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layer.js"></script>
+<script>
+window.onload = function () {
+	publick();
+	sliding();
+	banner();
+	layer();
+}
+</script>
+</head>
+
+<body>
+<div id="wrap">
+  <div class="boxartlist" id="box">
+    <div class="btit" id="btit">
+      <span><a href="{:U('Index/index')}/" style="color:#fff;">返回首页</a></span>
+      <div id="classMenu" style="background:none;">
+        <ul class="cMul">
+          
+        </ul>
+      </div>
+    </div><!--  btit end  -->
+    <div class="stit" id='stit'>
+      <span>在线留言</span>
+      <span id="classclass" style="background:none;"></span>
+    </div><!-- stit end -->
+   <div class="list_box" id='aboutcont'>
+			<form id="reserve_form" method='post'  name="form_do" action="{:U(GROUP_NAME. '/Guestbook/add')}/">
+              <div class="name"><span>姓名:</span><input type="text" value="请输入您的姓名" name="username" class="inp_one">*</div>
+                <div class="name"><span>联系方式:</span><input type="text" value="请输入您的电话号码" name="tel" class="inp_one"/>*</div>
+                <div class="name"><span>Email:</span><input type="text" value="请输入您的邮箱" name="email"/></div>
+                <div class="name"><span>QQ:</span><input type="text" value="请输入您的QQ" name="qq"/></div>
+                <div class="name"><span>留言信息:</span><input type="text" value="请输入您的留言" name="content" cols="50" rows="10"/></div>
+                <div class="sub"><input type="submit" value="提交"/><a href="javascript:;">重置</a></div>
+                <div class="clear"></div>
+            </form>
+		</div>
+		<include file="$tpl_Public_footer" />
+	</div><!-- box end-->
+	<div class="sy" id="sy">
+		<div class="sy_tit" id="fh">{$cate.name}</div>
+		<yhcms:catlist typeid='$cid' >
+			<div class="sy_cont"><a href="{$catlist.url}">{$catlist.name}</a></div>
+		</yhcms:catlist>
+	</div>
+</div><!-- wrap end -->
+</body>
+</html>

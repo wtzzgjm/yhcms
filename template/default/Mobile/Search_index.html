@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}-<yhcms:cfg_webname /></title>
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="description" content="{$description}" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/{$mobile_css}.css">
+</head>
+<body>
+	<div class="container">
+
+		<include file="$tpl_Public_add1" />
+		<div class="content-container">
+			<div class="list_pro">
+				<header>
+					<h2>搜索结果:产品</h2>
+				</header>
+
+				<dl class="dllist">
+					<if condition="! empty($keyword)">
+					<yhcms:prolist typeid="$cid" keyword="$keyword" pagesize="100">
+						<dd>
+							<a href="{$prolist.url}"><img src="{$prolist.litpic}" width="100%"></a>
+							<a href="{$prolist.url}">{$prolist.title}</a>
+						</dd>
+					</yhcms:prolist>
+					</if>
+				</dl>
+				
+				<header>
+					<h2>搜索结果:新闻</h2>
+				</header>
+				<ul class="ullist">
+					<if condition="! empty($keyword)">
+					 <yhcms:artlist typeid="$cid" keyword="$keyword" pagesize="100">
+					 	<li>
+							<a href="{$artlist.url}">
+								<p>
+									{$artlist.title}
+								</p>
+								<i class="fa fa-angle-right fa-gray"></i>
+							</a>
+						</li>
+					 </yhcms:artlist>
+					 </if>
+				</ul>
+				
+				<header>
+					<h2>搜索结果:案例</h2>
+				</header>
+
+				<dl class="dllist">
+					<if condition="! empty($keyword)">
+					<yhcms:piclist typeid="$cid" keyword="$keyword" pagesize="100">
+						<div class="pro-l">
+							<dd>
+								<a href="{$piclist.url}"><img src="{$piclist.litpic}" width="100%"></a>
+								<a href="{$piclist.url}">{$piclist.title}</a>
+							</dd>
+						</div>
+				  </yhcms:piclist>
+				  </if>
+					
+				</dl>
+
+
+			</div>
+
+
+			<include file="$tpl_Public_footer" />
+		</div>
+
+
+		<include file="$tpl_Public_header" />
+
+	</div>
+
+
+	<script type="text/javascript" src="__PUBLIC__/js/common.min.js"></script>
+	<script type="text/javascript">
+		yhcmsApp.rem().windowSize().slidebar();
+	</script>
+</body>
+</html>

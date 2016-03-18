@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+<script type="text/javascript" src="http://img3.job1001.com/js/ZeroClipboard/jquery.zclip.min.js"></script> 
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Index/keyword')}" class="onloading on"><em>生成关键词列表</em></a>
+    </div>
+    <div class="bk10"></div>
+    <div class="explain-col">
+        <font color="gray">
+            &nbsp;&nbsp;&nbsp;&nbsp;温馨提醒：此处功能仅作用于关键词列表导出，具体排名查询请用爱站或其他工具进行查询。
+        </font>
+    </div> 
+    <div class="bk10"></div>
+    <div class="table-list"> 
+    <form action="{:U(GROUP_NAME. '/Index/keyword')}" method="post" id="form_do" name="form_do">
+        </br>
+        <dl>
+            <dt>核心关键词：</dt>
+            <dd>
+                <input type="text" name="hx_gjc" class="inp_one" value="<if condition="$hxgjc neq ''">{$hxgjc}<else />{$Think.config.cfg_site_hxkey}</if>" style="width:400px;"/>&nbsp;<font style="color:red;">*&nbsp;多个关键词使用 " , " 间隔 </font>
+            </dd>
+        </dl>
+        </br>
+        <dl>
+            <dt>长尾关键词：</dt>
+            <dd>
+                <input type="text" name="cw_gjc" class="inp_one" value="<if condition="$cwgjc neq ''">{$cwgjc}<else />{$Think.config.cfg_site_cwkey}</if>" style="width:400px;"/>&nbsp;<font style="color:red;">*&nbsp;多个关键词使用 " , " 间隔</font>
+            </dd>
+        </dl>
+        </br>
+        <dl>
+            <dt>地区选项：</dt>
+            <dd>
+                <input type="radio" name="seltype" value="0" <if condition="$seltype eq 0">checked</if>>&nbsp;无地区&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="seltype" value="1" <if condition="$seltype eq 1">checked</if>>&nbsp;推荐地区&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="seltype" value="2" <if condition="$seltype eq 2">checked</if>>&nbsp;非推荐地区&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="seltype" value="3" <if condition="$seltype eq 3">checked</if>>&nbsp;所有地区
+            </dd>
+        </dl>
+        <br>
+        <input type="submit" class="button" id="submit" value="提 交">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<if condition="$tmpstr neq ''"><input type="button" class="button" id="copy_btn" value="一键复制所有生成关键词"></if>
+        <br />
+        <span id="tmpstr">{$tmpstr}</span>
+    </form>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){  
+    if (window.clipboardData ) {  
+        $('#copy_btn').click(function() {  
+            window.clipboardData.setData("Text", $("#tmpstr").html().replace(/<br>/g,"|"));  
+            alert('复制成功！');  
+        });  
+    } else {  
+        $("#copy_btn").zclip({  
+            path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',  
+            copy:function(){return $("#tmpstr").html().replace(/<br>/g,"|");},  
+            afterCopy:function(){alert('复制成功！');}  
+        });  
+    }  
+});   
+</script>
+</body>
+</html>

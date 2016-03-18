@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<include file="Public:js_css"/>
+</head>
+<body>
+<div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+        <a href="{:U(GROUP_NAME. '/Area/index')}" class="onloading on"><em>地区管理</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Area/add', array('pid' => $pid))}" class="onloading"><em>添加地区</em></a><span>|</span>
+
+        <a href="{:U(GROUP_NAME. '/Area/autoadd')}" class="onloading"><em>一键推荐地区</em></a><span>|</span>
+        <a href="{:U(GROUP_NAME. '/Area/autocancel')}" class="onloading"><em>一键取消推荐</em></a> 
+    </div>
+    <div class="bk10" height="">
+    </div>
+    <div class="table-list">
+    <form action="{:U(GROUP_NAME.'/Area/sort', array('pid' => $pid))}" method="post" id="form_do" name="form_do">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th width="35px">编号</th>
+                    <th>名称</th>
+                    <th width="50px">简称</th>
+                    <th>英文名</th>
+                    <th width="80px">推荐</th>
+                    <th width="50px">排序</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+    			<foreach name='vlist' item='v'>
+                <tr>
+                    <td align="center"><input type="checkbox" name="key[]" value="{$v.id}"></td>
+                    <td align="center">{$v.id}</td>
+                    <td class="aleft"><a href="{:U(GROUP_NAME.'/Area/index',array('pid' => $v['id']))}">{$v.name}<if condition="$v.cnum neq 0"><em style="color:#f00">({$v.cnum})</em></if></a></td>
+                    <td align="center">{$v.sname}</td>
+    				<td align="center">{$v.ename}</td>
+                    <td align="center">
+                        <a href="javascript:void();" onclick="dr_upis_top('{:U(GROUP_NAME. '/Area/upis_top', array('id' => $v['id']))}', {$v['id']})" class='is_top{$v['id']}'>
+                            <if condition="$v.is_top eq 0">不推荐<else/><span style="color:#079B04;">推荐</span></if>
+                        </a>
+                    </td>
+                    <td align="center"><input type="text" name="{$v.id}" value="{$v.sort}" size="4"/></td>
+                    <td align="center">
+                        <a href="{:U(GROUP_NAME.'/Area/edit',array('id' => $v['id'], 'pid' => $v['pid']))}">修改</a>
+                        <a href="javascript:void();" onclick="dr_dialog_del('确定删除', '{:U(GROUP_NAME. '/Area/del', array('id' => $v['id'], 'pid' => $v['pid']))}')">删除</a>
+    				</td>
+                </tr>
+                </foreach>
+            </tbody>
+            <tr>
+                <td align="center"><input type="checkbox" id="check"></td>
+                <td colspan="2">
+                	<a href="javascript:void();" onclick="dr_confirm_del_all('确实要批量推荐选择项吗？','{:U(GROUP_NAME.'/Area/batchis_top', array('batchFlag' => 1))}','批量推荐')" class="onloading"><em>批量推荐</em></a><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+
+                	<a href="javascript:void();" onclick="dr_confirm_del_all('确实要取消推荐选择项吗？','{:U(GROUP_NAME.'/Area/no_top', array('batchFlag' => 1))}','取消推荐')" class="onloading"><em>取消推荐</em></a><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+
+                    <a href="javascript:void();" onclick="dr_confirm_del_all('确实要删除选择项吗？','{:U(GROUP_NAME.'/Area/del', array('batchFlag' => 1))}')" class="onloading"><em>删除</em></a><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <a href="javascript:void();" onclick="dr_confirm_px_all('确实要更新排序吗？','{:U(GROUP_NAME.'/Area/sort', array('batchFlag' => 1))}')" class="onloading"><em>更新排序</em></a>
+                </td>
+                <td colspan="6" align='right'>{$page}</td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+</body>
+</html>

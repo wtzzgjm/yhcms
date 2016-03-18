@@ -1,0 +1,117 @@
+/*public*/
+#wrap {width:100%;height: 100%;margin:0 auto;background:#dcdcdc;max-width: 640px;overflow-y: hidden;position:relative;}
+.box {width:100%;overflow: hidden;height:130%;position:absolute;top:0;}
+#ban {width:100%;overflow:hidden;position:relative;}
+#ban .ban_ul {width:300%;height:100%;position: absolute;left:0px;}
+#ban .ban_li {height:100%;float:left;}
+.in_main {width:100%;height:45%;background:#fff;padding-top:2%;}
+.phone {width:94%;margin:0 3%;background:#999a9e;height:10%;line-height:2em;border-radius: 10px;}
+.phone a {width:90%;height:100%;background:url(../images/7.png) no-repeat 2% 5%;background-size:10%;display:block;padding-left:10%;font-size:1.5em;text-align:center;color:#fff;}
+.menu {width:100%;height:90%;padding-top:2%;}
+.menu_ul {width:100%;height:100%;}
+.menu_li {width:46%;float:left;margin-left:2.7%;margin-bottom:2%;}
+.menu_li span {display:block;width: 100%;height: 40%;margin-top: 10%;}
+.menu_li a {display: block;width: 100%;height:20%;text-align:center;margin-top:6%;color:#fff;}
+#footer {width:100%;height:10.7%;background-color: #dcdcdc;position: relative;height:120px;}
+#footer span {display:block;width: 100%;text-align: center;font-size: 1em;position: absolute;top:25%;}
+#footer .footspan2 {top:60%;}
+#footer .footspan2 a {width:48%;height:100%;text-align: right;color:#333;display: block;float:left;}
+#footer .footspan2 .footera2 {text-align: left;}
+#footer .footspan2 .footera3 {width:4%;text-align: center;}
+
+
+/*********about**********/
+.boxabout {width:100%;overflow: hidden;position:absolute;top:0;}
+.btit {width:100%;height:50px;background:-webkit-linear-gradient(#0058a4,#014c8d,#0058a4);}
+
+.btit  span {display: block;float: left;overflow: hidden;line-height: 1.8em;color:#fff;font-size: 1.8em;margin-left:3%;position: absolute;left: 0;}
+#classMenu {width:12%;height:90%;float: right;margin-right: 5%;background: url(../images/me1.png) no-repeat center;margin-top:0.5%;position: relative;background-size: 80%;}
+.cMul {opacity: 0.7;background:#405c86;width:300%;height:600%;position: absolute;left:-180%;top:100%;z-index: 10;overflow: hidden;border-radius: 10px;display: none;}
+.cMul li {width:90%;height:14.2%;padding:0 5%;line-height: 1.8em;text-align:center;overflow: hidden;}
+.cMul li a {color:#fff;display:block;width: 100%;height: 100%;}
+
+.stit {width:100%;height:35px;background: #dcdcdc;line-height: 2em;position: relative;}
+.stit span {display: block;overflow: hidden;float: left;margin-left:4%;width:40%;}
+#classclass {position:absolute;right:0;width:30%;height:98%;overflow: hidden;background:url(../images/me2.png) no-repeat center;float: right;text-align: right;margin-right: 3%;padding-left:17%;background-size: 16%;}
+
+.aboutcont {overflow:hidden;background:#fff;padding: 0 5%;width:90%;line-height: 1.5em;min-height:500px;}
+
+
+/************list_article**************/
+.boxartlist {width:100%;overflow: hidden;position:absolute;top:0;}
+.list_box {overflow:hidden;background:#fff;width:100%;}
+.list_box ul {width:100%;overflow: hidden;}
+.list_box ul li {width:100%;height:60px;border-bottom:1px solid #dcdcdc;background:url(../images/jt.png) no-repeat 98%;background-size: 3%;}
+.list_box ul li a {width:90%;height:30px;display: block;padding: 0 5%;line-height: 30px;color:#666;font-size:1.1em;}
+.list_box ul li span {width:100%;height:30px;display:block;line-height: 30px;color:#999;font-size:0.9em;}
+
+.page {width:100%;height:40px;line-height: 40px;}
+.page span {width:20%;height:100%;float:left;text-align: center;}
+.page span a {color:#666;}
+.page span:last-child{float:right;}
+
+/*************show_art*******************/
+.arttit {width:100%;height:30px;font-size: 1.3em;line-height: 1.35em;text-align: center;font-weight: bold;overflow: hidden;margin-top:10px;}
+.arttim {width:100%;height:30px;text-align: center;border-bottom: 1px solid #999;color:#999;}
+.artcont {width:90%;overflow: hidden;padding: 0 5%;line-height: 30px;}
+.artcont img {max-width: 320px;text-align: center;}
+.prev,.next {width:100%;height:40px;line-height: 40px;text-align: center;color:#666;}
+.prev a,.next a {color:#666;}
+
+/******************list_product***************************/
+.prolist_box {overflow:hidden;background:#fff;width:100%;}
+.prolist_box ul {width:100%;overflow: hidden;}
+.prolist_box ul li {width:100%;height:100px;border-bottom: 1px solid #dcdcdc;background:url(../images/jt.png) no-repeat 98%;background-size: 3%;}
+.prolist_box ul li img {width:100px;height:80px;float:left;margin-top:10px;margin-left: 10px;}
+.prolist_box ul li a {display:block;width: 100%;height: 100%;}
+.prolist_box ul li div {height:100%;overflow:hidden;float:left;margin-left:20px;}
+.prolist_box ul li div span {display: block;overflow: hidden;color: #666;line-height:70px;height:50px;font-size: 1.2em;}
+.prolist_box ul li div span:last-child {font-size: 1em;line-height: 25px;}
+
+
+/********************** show_pro *************************************/
+
+
+.projs {width:100%;height:180px;}
+.prosmtit {widht:94%;height:30px;line-height: 30px;font-size: 1.4em;font-weight: bold;padding:0 3%;}
+.procs {width:94%;height:30px;line-height: 30px;border-bottom: 1px solid #dcdcdc;font-weight: bold;font-size: 1em;padding:0 3%;color:#999;}
+.procs span {color:#333;padding-left:15px;}
+.smtit {width:97%;height:30px;border-bottom: 1px solid #dcdcdc;border-top: 1px solid #dcdcdc;padding-left:3%;background:#ccc;text-align: center;line-height: 30px;}
+.procont {width:94%;overflow:hidden;padding: 0 3%;line-height: 25px;margin-bottom: 15px;}
+
+
+/*首页ban 圆点*/
+.yd {width:100%;height:25px;position:absolute;bottom:0;background: #ccc;opacity:0.7;}
+#yd {width:100px;height:15px;margin-top:5px;float:right;margin-right:20px;background: #ccc}
+.yd div {width:15px;height:15px;float:left;background:#333;margin: 0 5px;border-radius: 10px;}
+.yd .active {background:#fff;}
+
+
+
+/***留言***/
+#reserve_form {width:100%;height:400px;}
+.name {width:90%;height:10%;border:1px solid #e3e3e3;min-height:50px;margin:3% auto;padding-left:2%;}
+.name span {display:inline-block;width:15%;height:100%;font-size:14px;line-height:40px;text-align:center;min-width:80px;min-height:40px;}
+.name input {width:70%;height:30px;border:none;min-height:40px;position:relative;top:0;color:#666;}
+.sub {width:92%;height:10%;margin:0 auto;min-height:40px;}
+.sub a,.sub input {display:block;width:30%;height:100%;float:right;min-width:40px;margin-left:2%;font-weight:bold;color:#fff;}
+.sub a {font-size:150%;text-align:center;line-height:40px;background:#666;}
+.sub input {font-size:150%;text-align:center;line-height:40px;background:#1f5e86;border:none;}
+
+
+
+/*****弹出层菜单分类****/
+
+.sy {width:100%;height:100%;position: absolute;top:0;left: 100%;z-index:11;background: #405c86;opacity: 0.9;}
+.sy_tit {width:100%;height:10%;text-align: center;font-size: 1.5em;color:#fff;line-height: 1.8em;background: url(../images/jt2.png) no-repeat 95% 25%;background-size: 5%;}
+.sy_cont {width:95%;height:6%;line-height:2em;padding-left:5%;background: url(../images/jt2.png) no-repeat 95% 25%;background-size: 3%;border-bottom:1px solid #1c375e; }
+.sy_cont a {display: block;width: 100%;height: 100%;color: #fff;}
+
+@media all and (min-width: 640px) {
+	.phone a {background-size: 4%;font-size:1.2em;}
+	.stit {line-height:2em}
+}
+
+@media all and (max-width: 320px) {
+	.phone a {background-size: 2%;font-size:1.2em;}
+}
